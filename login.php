@@ -1,3 +1,4 @@
+<?php $pageTitle="Log In"; $pageID="login"; ?>
 <?php include 'include/page-begin.php' ?>
    
     <div class="text-center">

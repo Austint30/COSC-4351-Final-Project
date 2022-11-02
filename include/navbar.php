@@ -1,9 +1,9 @@
 
 <?php
-function activeNavItem($_pageID){
+function activeNavItem($_pageID, $className="active"){
     global $pageID;
     if (isset($pageID) && $_pageID == $pageID){
-        echo "active";
+        echo $className;
     }
 }
 ?>
@@ -28,7 +28,7 @@ function activeNavItem($_pageID){
                     <a class="nav-link" href="/admin.php">Admin (temp)</a>
                 </li>
             </ul>
-            <button class="btn btn-primary">Sign In</button>
+            <a href="/login.php" class="btn btn-primary <?php activeNavItem("login", "disabled") ?>">Log In</a>
         </div>
     </div>
 </nav>
