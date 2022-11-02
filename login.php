@@ -4,25 +4,25 @@
     <div class="text-center">
         <div class="p-3 bg-secondary text-white">
         <!-- Form starts here -->
-        <form class="container" style="max-width: 500px">
+        <form class="container" style="max-width: 500px" action="login-response-server.php" method="post">
             <!-- Email input field-->
             <div>
-                <h3>Email:</h3>
-                <input type="email" id="input_email" name="input_email" placeholder="Enter email" class="form-control"><br><br>
+                <h3>Username:</h3>
+                <input id="username" name="username" placeholder="Enter username" class="form-control"><br><br>
             </div>
 
             <!-- Password input field-->
             <div>
                 <h3>Password:</h3>
-                <input type="password" id="input_password" name="input_password" size="50" placeholder="Enter Password" class="form-control"><br><br>
+                <input type="password" id="password" name="password" size="50" placeholder="Enter Password" class="form-control"><br><br>
             </div>
 
             <!-- Remember me checkbox -->
-            <div class="checkbox"> 
+            <!-- <div class="checkbox"> 
                 <label>
                     <input type="checkbox"> Remember me
                 </label> 
-            </div> 
+            </div>  -->
 
             <!-- Submit button -->
             <div>
