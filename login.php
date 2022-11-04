@@ -7,8 +7,8 @@
     <form action="login-response-server.php" method="post">
         <!-- Email input field-->
         <div>
-            <h3>Username:</h3>
-            <input id="username" name="username" placeholder="Enter username" class="form-control"><br><br>
+            <h3>Email:</h3>
+            <input id="email" name="email" type="email" placeholder="Enter Email Address" class="form-control"><br><br>
         </div>
 
         <!-- Password input field-->
@@ -39,7 +39,7 @@
             </label> 
         </div> 
         <div>
-            <button type="submit" class="btn btn-primary">Register Here</button>
+            <a href="/signup.php" class="btn btn-primary">Register Here</a>
         </div>
     </form>
 </div>
