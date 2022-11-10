@@ -1,9 +1,10 @@
 <?php $pageID="index" ?>
-<?php include 'include/page-begin.php' ?>
+<?php include_once 'include/page-begin.php' ?>
 
 <div class="container page-body">
 <h1>This is the homepage</h1>
+<?php renderMsgs(); ?>
 <img src="/img/burgermeme.jpg" />
 </div>
 
-<?php include 'include/page-end.php' ?>
+<?php include_once 'include/page-end.php' ?>

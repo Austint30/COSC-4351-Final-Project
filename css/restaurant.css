@@ -18,6 +18,11 @@ body {
     margin-top: 1rem;
 }
 
+.required-asterisk::after {
+    content: "*";
+    color: red;
+}
+
 @media only screen and (max-width: 600px) {
     .page-body {
         margin-top: 0.5rem;

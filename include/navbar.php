@@ -1,4 +1,6 @@
 
+<?php include_once 'include/auth.php' ?>
+
 <?php
 function activeNavItem($_pageID, $className="active"){
     global $pageID;
@@ -24,11 +26,26 @@ function activeNavItem($_pageID, $className="active"){
                 <li class="nav-item <?php activeNavItem("reservations") ?>">
                     <a class="nav-link" href="/reservations.php">Reservations</a>
                 </li>
-                <li class="nav-item <?php activeNavItem("admin") ?>">
-                    <a class="nav-link" href="/admin.php">Admin (temp)</a>
-                </li>
+                <?php
+                    if (checkUserType(getCurrentUser($conn), "ADMIN")){
+                        echo '<li class="nav-item ';
+                        echo activeNavItem("admin");
+                        echo '">
+                            <a class="nav-link" href="/admin.php">Admin</a>
+                        </li>';
+                    }
+                ?>
             </ul>
-            <a href="/login.php" class="btn btn-primary <?php activeNavItem("login", "disabled") ?>">Log In</a>
+            <?php
+            
+                if(isset($_SESSION["username"]) && $_SESSION["username"]){
+                    echo '<a href="/logout.php" class="btn btn-primary">Log Out</a>';
+                }
+                else
+                {
+                    echo '<a href="/login.php" class="btn btn-primary">Log In</a>';
+                }
+            ?>
         </div>
     </div>
 </nav>

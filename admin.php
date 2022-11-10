@@ -1,8 +1,13 @@
 <?php $pageTitle="Admin"; $pageID="admin"; ?>
-<?php include 'include/page-begin.php' ?>
+<?php include_once 'include/page-begin.php' ?>
+<?php
+    include_once 'include/auth.php';
+    requireUserAdmin($conn);
+?>
 
 <div class="container page-body">
     <h1 class="mt-3">Hello! This is the admin page.</h1>
+    <?php renderMsgs(); ?>
     <h5>Restaurants</h5>
     <table class="table">
         <thead><tr>
@@ -26,4 +31,4 @@
     </table>
 </div>
 
-<?php include 'include/page-end.php' ?>
+<?php include_once 'include/page-end.php' ?>

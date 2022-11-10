@@ -1,5 +1,5 @@
 <?php
-    // Always include this php file on the bottom of every page
+    // Always include_once this php file on the bottom of every page
 ?>
 
 <!-- Bootstrap JS -->

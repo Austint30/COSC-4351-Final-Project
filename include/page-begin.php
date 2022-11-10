@@ -1,8 +1,12 @@
 <?php
-    include "global.php"
-    // Always include this php file on the top of every page
+    include_once "global.php";
+    include_once "messages.php";
+    // Always include_once this php file on the top of every page
 
-
+    // Start user session (stores temporary stuff server side like username after login)
+    session_start([
+        'cookie_lifetime' => 86400*30 // user will lose session after 1 month
+    ]);
 ?>
 
 <?php require 'connect.php' ?>
@@ -31,4 +35,4 @@
     </title>
 </head>
 <body>
-<?php include 'navbar.php' ?>
+<?php include_once 'navbar.php' ?>
