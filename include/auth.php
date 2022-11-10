@@ -48,4 +48,9 @@ function hashPassword($sourcePswd){
     return password_hash($sourcePswd, PASSWORD_DEFAULT);
 }
 
+function storeSession($username, $name){
+    $_SESSION["username"] = $username;
+    $_SESSION["name"] = $name;
+}
+
 ?>

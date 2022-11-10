@@ -39,7 +39,14 @@ function activeNavItem($_pageID, $className="active"){
             <?php
             
                 if(isset($_SESSION["username"]) && $_SESSION["username"]){
-                    echo '<a href="/logout.php" class="btn btn-primary">Log Out</a>';
+                    echo '<div class="dropdown">';
+                    echo    '<button class="btn btn-primary dropdown-toggle" type="button" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                    echo        "Hello ".$_SESSION["name"];
+                    echo    '</button>';
+                    echo    '<div class="dropdown-menu" aria-labelledby="user-dropdown">';
+                    echo        '<a class="dropdown-item" href="/logout.php">Log Out</a>';
+                    echo    '</div>';
+                    echo '</div>';
                 }
                 else
                 {

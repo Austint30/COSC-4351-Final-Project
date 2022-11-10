@@ -23,6 +23,17 @@ body {
     color: red;
 }
 
+#user-dropdown {
+    background-color: transparent;
+    border-color: transparent;
+    transition: 250ms;
+}
+
+#user-dropdown:hover {
+    background-color: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+}
+
 @media only screen and (max-width: 600px) {
     .page-body {
         margin-top: 0.5rem;
