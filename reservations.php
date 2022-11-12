@@ -52,9 +52,13 @@
             <p class="text-danger">Please note that on high traffic days a $10 holding fee will be placed, and returned upon arrival. If you do not show up then it is not refunded</p>
         </div>
 
-        <!-- Submit button -->
+        <!-- Showing how many of which table is available  NEEDS TO BE DONE-->
         <div>
-            <button type="submit" class="btn btn-primary">Submit</button>  
+        </div>
+
+        <!-- Reserve button -->
+        <div>
+            <button type="submit" class="btn btn-primary">Reserve</button>  
         </div>
     </form>
 </div>
