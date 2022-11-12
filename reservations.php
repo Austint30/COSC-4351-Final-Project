@@ -26,14 +26,14 @@
             <!-- Name input field-->
             <div class="col-sm">
                 <label for="name">Name</label>
-                <input id="name" name="name" placeholder="Enter Full Name" class="form-control">
+                <input id="name" name="name" class="form-control">
                 <br>
             </div>
 
             <!-- Phone Number input field-->
             <div class="col-sm">
                 <label for="phonenumber">Phone Number</label>
-                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Enter Phone Number" class="form-control">
+                <input type="tel" id="phonenumber" name="phonenumber" class="form-control">
                 <br>
             </div>
         </div>
@@ -41,14 +41,14 @@
             <!-- Email input field-->
             <div class="col-sm">
                 <label for="emailaddress">Email Address</label>
-                <input type="email" id="emailaddress" name="emailaddress" placeholder="Enter Email Address" class="form-control">
+                <input type="email" id="emailaddress" name="emailaddress" class="form-control">
                 <br>
             </div>
 
             <!-- Num Guests input field-->
             <div class="col-sm">
                 <label for="numguests">Number Of Guests</label>
-                <input type="number" id="numguests" name="numguests" placeholder="Enter # of Guests" class="form-control">
+                <input type="number" min="0" id="numguests" name="numguests" class="form-control" value="0">
                 <br>
             </div>
         </div>
