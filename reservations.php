@@ -23,14 +23,14 @@
         <!-- Email input field-->
         <div>
             <h3>Email Address</h3>
-            <input type="email" id="emailaddress" name="emailaddress" placeholder="Enter Email Address Number" class="form-control">
+            <input type="email" id="emailaddress" name="emailaddress" placeholder="Enter Email Address" class="form-control">
             <br>
         </div>
 
         <!-- Num Guests input field-->
         <div style="max-width: 200px">
             <h3>Guest Amount </h3>
-            <input type="number" id="numguests" name="numguests" placeholder="Enter Number of Guests" class="form-control">
+            <input type="number" id="numguests" name="numguests" placeholder="Enter # of Guests" class="form-control">
             <br>
         </div>
 
