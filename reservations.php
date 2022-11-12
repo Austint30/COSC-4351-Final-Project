@@ -6,6 +6,19 @@
     <h5 class="border-bottom pb-3">Reserve a Table</h5>
     <!-- Form starts here -->
     <form action="" method="post">
+        <!-- Restaurant selection field-->
+        <div>
+        <?php
+            $query = $conn->query('SELECT * FROM restaurant.restaurant;');
+            echo'<select>';
+            while ($row = $query->fetch_assoc()){
+                echo "<option value='".$row['street_address']."'>" .$row['street_address'] ."</option>";
+            }
+            
+            echo'</select>';
+        ?>  
+        </div>
+
         <!-- Name input field-->
         <div>
             <h3>Name</h3>
