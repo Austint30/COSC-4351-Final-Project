@@ -8,15 +8,16 @@
     <form action="" method="post">
         <!-- Restaurant selection field-->
         <div>
-        <?php
-            $query = $conn->query('SELECT * FROM restaurant.restaurant;');
-            echo'<select>';
-            while ($row = $query->fetch_assoc()){
-                echo "<option value='".$row['street_address']."'>" .$row['street_address'] ."</option>";
-            }
-            
-            echo'</select>';
-        ?>  
+            <h3>Select Location</h3>
+            <?php
+                $query = $conn->query('SELECT * FROM restaurant.restaurant;');
+                echo'<select>';
+                while ($row = $query->fetch_assoc()){
+                    echo "<option value='".$row['street_address']."'>" .$row['street_address'] ."</option>";
+                }
+                
+                echo'</select>';
+            ?>  
         </div>
 
         <!-- Name input field-->
