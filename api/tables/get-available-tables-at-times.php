@@ -11,6 +11,13 @@
     $rest_id = $input->rest_id;
     $num_guests = $input->num_guests ?? null;
 
+    $parsedDate = DateTime::createFromFormat("Y-m-d", $date);
+
+    if ($parsedDate->format('Y-m-d') < (new DateTime("now"))->format('Y-m-d')){
+        echo json_encode(array());
+        exit;
+    }
+
     $time = new DateTime();
     $time->setTime($HOUR_BEGIN, 0, 0, 0);
 

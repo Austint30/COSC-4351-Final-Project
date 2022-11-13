@@ -187,6 +187,10 @@
         if (!times) return;
         let content = '<div class="reservation-times-grid">';
 
+        if (times.length == 0){
+            content += '<div class="lead text-center">No times available</div>';
+        }
+
         times.forEach(([ time, tables ]) => {
             let dt = new Date(`${resDateInput.value}T${time}`);
             let timeStr = dt.toLocaleTimeString(undefined, {
@@ -215,7 +219,7 @@
         else
         {
             resTimeCont.hidden = false;
-            resTimeBody.innerHTML = '<span class="lead text-center">Finding available times...</span>';
+            resTimeBody.innerHTML = '<div class="lead text-center">Finding available times...</div>';
         }
 
         fetch('api/tables/get-available-tables-at-times.php', {
