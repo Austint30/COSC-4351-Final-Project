@@ -34,6 +34,7 @@
         ?>
     </title>
     <script src="js/debounce.js"></script>
+    <script src="js/util.js"></script>
 </head>
 <body>
 <?php include_once 'navbar.php' ?>

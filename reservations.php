@@ -64,7 +64,15 @@
             <div class="col-sm">
                 <label class="required-asterisk">Reservation Date</label>
                 <!-- Date input field -->
-                <input id="reservation-date" type="date" class="form-control input-sm" id="date" name="date" required/>
+                <input
+                    id="reservation-date"
+                    type="date"
+                    class="form-control input-sm"
+                    id="date"
+                    name="date"
+                    required
+                    min="<?php echo date('Y-m-d') ?>"
+                />
                 <br>
             </div>
             <div class="col-sm"></div>
@@ -115,7 +123,17 @@
         }
     });
 
-    numGuestsInput.addEventListener('input', debouncedCallApi);
+    // Prevent user from selecting a date before today
+    resDateInput.addEventListener('input', () => {
+        let today = new Date();
+        const inputDate = new Date(resDateInput.value+'T00:00');
+
+        if (inputDate < today) {
+            resDateInput.value = today.toISOString().split('T')[0]
+        }
+    })
+
+    resDateInput.addEventListener('input', debouncedCallApi);
 
     times = null;
 
