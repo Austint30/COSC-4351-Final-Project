@@ -52,21 +52,19 @@
                 <br>
             </div>
         </div>
-        <label>Date and Time</label>
-        <div class="input-group">
-            <!-- Date input field -->
-            <input id="reservation-date" type="date" class="form-control input-sm" id="date" name="date"/>
-    
-            <!-- making gap 0 -->
-            <span class="input-group-btn" style="width:0px;"></span>
-    
-            <!-- Time input field -->
-            <input id="reservation-time" type="time" class="form-control input-sm" id="time" name="time"/>
-            <br>
+        <div class="row">
+            <div class="col-sm">
+                <label>Reservation Date</label>
+                <!-- Date input field -->
+                <input id="reservation-date" type="date" class="form-control input-sm" id="date" name="date"/>
+                <br>
+            </div>
+            <div class="col-sm"></div>
         </div>
 
-        <div id="available-tables" class="my-3 p-2 card">
-
+        <div id="reservation-times-container" class="mb-3 reservation-times-container">
+            <label>Choose an open time slot</label>
+            <div id="reservation-times-body" class="reservation-times-body"></div>
         </div>
         
         <!-- Fee warning -->
@@ -86,26 +84,122 @@
 </div>
 
 <script>
-    $availTbWrapper = document.getElementById("available-tables");
-    $resDate = document.getElementById("reservation-date");
-    $resTime = document.getElementById("reservation-time");
-    $restSelect = document.getElementById("restaurant-select");
+    resTimeBody = document.getElementById("reservation-times-body");
+    resTimeCont = document.getElementById("reservation-times-container");
+    resDateInput = document.getElementById("reservation-date");
+    // $resTime = document.getElementById("reservation-time");
+    restInput = document.getElementById("restaurant-select");
+    numGuestsInput = document.getElementById("numguests");
     
-    $resDate.addEventListener('input', callApi);
-    $resTime.addEventListener('input', callApi);
-    $restSelect.addEventListener('input', callApi);
+    resDateInput.addEventListener('input', callApi);
+    // $resTime.addEventListener('input', callApi);
+    restInput.addEventListener('input', callApi);
+    numGuestsInput.addEventListener('input', callApi);
+
+    times = null;
 
     callApi();
 
+    function onResTimeChosen(time){
+        let dt = new Date(`${resDateInput.value}T${time}`);
+        let timeStr = dt.toLocaleTimeString(undefined, {
+                hour: 'numeric',
+                minute: 'numeric'
+            })
+        resTimeBody.innerHTML = `<span>
+            <input readonly hidden id="reservation-time" name="reservation-time" value="${time}" />
+            <div class="form-control" style="max-width: 100px;display: inline-block;">${timeStr}</div>
+            <button id="clear-reservation" onclick="clearChosenTime();" type="button" class="btn btn-link">Clear</button>
+        </span>`;
+    }
+
+    function clearChosenTime(){
+        renderTimes();
+    }
+
+    /*function findTableCombination(time){
+        let tableArray = times.find((item) => item[0] == time);
+        if (!tableArray) return;
+
+        // Sort from largest num seats to smallest
+        tableArray.sort((a, b) => b.num_seats - a.num_seats);
+
+        // Filter out table types that have 0 tables left
+        tableArray.filter((item) => item.num_tables > 0);
+
+        let prevSeatsLeft = -1;
+        let currSeatsLeft = 0;
+
+        while()
+
+        // Find 
+        tableArray.forEach(({ num_seats, num_tables }) => {
+            const numGuests = numGuestsInput.value;
+            
+            if (numGuests)
+        });
+    }*/
+
+    function renderTimes(){
+        if (!times) return;
+        let content = '<div class="reservation-times-grid">';
+
+        times.forEach(([ time, tables ]) => {
+            let dt = new Date(`${resDateInput.value}T${time}`);
+            let timeStr = dt.toLocaleTimeString(undefined, {
+                hour: 'numeric',
+                minute: 'numeric'
+            })
+
+            content += `<button
+                id="res-time-${time}"
+                type="button"
+                class="btn btn-outline-primary"
+                onclick="onResTimeChosen('${time}')"
+            >${timeStr}</li>`;
+        })
+
+        content += '</div';
+        resTimeBody.innerHTML = content;
+    }
+
     function callApi(){
-        if (!$resDate.value || !$resTime.value || !$restSelect.value){
-            $availTbWrapper.hidden = true;
+        if (!resDateInput.value || !restInput.value){
+            resTimeCont.hidden = true;
             return;
         }
         else
         {
-            $availTbWrapper.hidden = false;
-            $availTbWrapper.innerHTML = '<span class="lead text-center">Finding available tables...</span>';
+            resTimeCont.hidden = false;
+            resTimeBody.innerHTML = '<span class="lead text-center">Finding available times...</span>';
+        }
+
+        fetch('api/tables/get-available-tables-at-times.php', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                date: resDateInput.value,
+                rest_id: restInput.value,
+                num_guests: Number(numGuestsInput.value)
+            })
+        })
+        .then(async resp => {
+            times = await resp.json();
+            renderTimes();
+        })
+    }
+
+    /*function callApi(){
+        if (!$resDateInput.value || !$resTime.value || !$restInput.value){
+            $resTimeBody.hidden = true;
+            return;
+        }
+        else
+        {
+            $resTimeBody.hidden = false;
+            $resTimeBody.innerHTML = '<span class="lead text-center">Finding available tables...</span>';
         }
 
         
@@ -116,16 +210,16 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                date: $resDate.value,
+                date: $resDateInput.value,
                 time: $resTime.value,
-                rest_id: $restSelect.value
+                rest_id: $restInput.value
             })
         })
         .then(async resp => {
             const data = await resp.json();
             console.log(data);
 
-            let dt = new Date(`${$resDate.value}T${$resTime.value}`);
+            let dt = new Date(`${$resDateInput.value}T${$resTime.value}`);
             console.log(dt);
 
             let dtString = dt.toLocaleDateString(undefined, {
@@ -145,9 +239,9 @@
 
             content += '</ul>';
 
-            $availTbWrapper.innerHTML = content;
+            $resTimeBody.innerHTML = content;
         })
-    }
+    }*/
 
     
 </script>
