@@ -48,8 +48,8 @@
             <!-- Num Guests input field-->
             <div class="col-sm">
                 <label for="numguests">Number Of Guests</label>
-                <input type="number" min="0" id="numguests" name="numguests" class="form-control" value="0">
-                <small class="form-text text-muted">Max number of guests: 20</small>
+                <input type="number" min="0" id="numguests" name="numguests" class="form-control" value="1">
+                <small class="form-text text-muted">Max number of guests including yourself: 20</small>
                 <br>
             </div>
         </div>
@@ -101,8 +101,8 @@
         if (numGuestsInput.value > 20){
             numGuestsInput.value = 20;
         }
-        else if (numGuestsInput.value < 0){
-            numGuestsInput.value = 0;
+        else if (numGuestsInput.value < 1){
+            numGuestsInput.value = 1;
         }
     });
 
@@ -127,6 +127,10 @@
 
     function clearChosenTime(){
         renderTimes();
+    }
+
+    function findBestTableCombo(time){
+        
     }
 
     /*function findTableCombination(time){
