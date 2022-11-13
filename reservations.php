@@ -105,13 +105,12 @@
     resTimeBody = document.getElementById("reservation-times-body");
     resTimeCont = document.getElementById("reservation-times-container");
     resDateInput = document.getElementById("reservation-date");
-    // $resTime = document.getElementById("reservation-time");
     restInput = document.getElementById("restaurant-select");
     numGuestsInput = document.getElementById("numguests");
     
     resDateInput.addEventListener('input', debouncedCallApi);
-    // $resTime.addEventListener('input', callApi);
     restInput.addEventListener('input', debouncedCallApi);
+    numGuestsInput.addEventListener('input', debouncedCallApi);
 
     // minmax guests input. Don't allow num of guests to exceed 20 or go below 0
     numGuestsInput.addEventListener('input', () => {
@@ -238,59 +237,6 @@
             renderTimes();
         })
     }
-
-    /*function callApi(){
-        if (!$resDateInput.value || !$resTime.value || !$restInput.value){
-            $resTimeBody.hidden = true;
-            return;
-        }
-        else
-        {
-            $resTimeBody.hidden = false;
-            $resTimeBody.innerHTML = '<span class="lead text-center">Finding available tables...</span>';
-        }
-
-        
-
-        fetch('api/tables/get-available-tables.php', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                date: $resDateInput.value,
-                time: $resTime.value,
-                rest_id: $restInput.value
-            })
-        })
-        .then(async resp => {
-            const data = await resp.json();
-            console.log(data);
-
-            let dt = new Date(`${$resDateInput.value}T${$resTime.value}`);
-            console.log(dt);
-
-            let dtString = dt.toLocaleDateString(undefined, {
-                weekday: 'long',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric'
-            })
-
-            let content = `<h5 class="card-title mx-3">Tables available at ${dtString}</h5>
-            <ul class="list-group list-group-flush">`;
-
-            data.forEach(item => {
-                content += `<li class="list-group-item">${item.num_seats} seat tables: ${item.num_tables}</li>`;
-            })
-
-            content += '</ul>';
-
-            $resTimeBody.innerHTML = content;
-        })
-    }*/
-
     
 </script>
 
