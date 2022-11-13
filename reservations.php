@@ -85,6 +85,8 @@
 </div>
 
 <script>
+    const debouncedCallApi = debounce(callApi);
+
     resTimeBody = document.getElementById("reservation-times-body");
     resTimeCont = document.getElementById("reservation-times-container");
     resDateInput = document.getElementById("reservation-date");
@@ -92,9 +94,9 @@
     restInput = document.getElementById("restaurant-select");
     numGuestsInput = document.getElementById("numguests");
     
-    resDateInput.addEventListener('input', callApi);
+    resDateInput.addEventListener('input', debouncedCallApi);
     // $resTime.addEventListener('input', callApi);
-    restInput.addEventListener('input', callApi);
+    restInput.addEventListener('input', debouncedCallApi);
 
     // minmax guests input. Don't allow num of guests to exceed 20 or go below 0
     numGuestsInput.addEventListener('input', () => {
@@ -106,7 +108,7 @@
         }
     });
 
-    numGuestsInput.addEventListener('input', callApi);
+    numGuestsInput.addEventListener('input', debouncedCallApi);
 
     times = null;
 
@@ -180,6 +182,7 @@
     }
 
     function callApi(){
+        console.log('calling API');
         if (!resDateInput.value || !restInput.value){
             resTimeCont.hidden = true;
             return;
