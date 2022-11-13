@@ -16,7 +16,7 @@
         $password = validateNotEmpty("password", $passwordMsg, "Password is required", $form_invalid);
 
         if (!$form_invalid){
-            $stmt = $conn->prepare("SELECT username, email, password, type ,name
+            $stmt = $conn->prepare("SELECT username, email, password, type, name
                                 FROM restaurant.user 
                                 WHERE (username = ? OR email = ?);");
         
@@ -29,7 +29,7 @@
             while ($user = $result->fetch_object()){
                 if (password_verify($password, $user->password)){
                     // Login successful! Add username to session.
-                    storeSession($user->username, $user->name);
+                    storeSession($user->username, $user->name, $user->email);
                     if ($user->type === "ADMIN"){
                         header("Location: /admin.php?successmsg=You are now logged in as an admin.");
                     }

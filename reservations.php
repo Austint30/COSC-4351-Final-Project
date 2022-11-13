@@ -1,6 +1,13 @@
 <?php $pageTitle="Reservations"; $pageID="reservations" ?>
 <?php include_once 'include/page-begin.php' ?>
 
+<?php
+
+    $session_name = $_SESSION["name"] ?? "";
+    $session_email = $_SESSION["email"] ?? "";
+
+?>
+
 
 <div class="container page-body" style="max-width: 800px">
     <h5 class="border-bottom pb-3 lead text-center">RESERVE A TABLE</h5>
@@ -8,10 +15,10 @@
     <form action="" method="post">
         <!-- Restaurant selection field-->
         <div>
-            <label for="restaurant-select">Select Location</label>
+            <label for="restaurant-select" class="required-asterisk">Select Location</label>
             <?php
                 $query = $conn->query('SELECT * FROM restaurant.restaurant;');
-                echo'<select id="restaurant-select" class="form-control">';
+                echo'<select id="restaurant-select" class="form-control" required>';
                 echo '<option value="">Select a restaurant</option>';
                 while ($row = $query->fetch_assoc()){
                     echo "<option value='".$row['id']."'>" .$row['street_address'].", ".$row["city"].", ".$row["state"]."</option>";
@@ -25,39 +32,39 @@
         <div class="row">
             <!-- Name input field-->
             <div class="col-sm">
-                <label for="name">Name</label>
-                <input id="name" name="name" class="form-control">
+                <label for="name" class="required-asterisk">Name</label>
+                <input id="name" name="name" class="form-control" value="<?php echo $session_name ?>" required/>
                 <br>
             </div>
 
             <!-- Phone Number input field-->
             <div class="col-sm">
-                <label for="phonenumber">Phone Number</label>
-                <input type="tel" id="phonenumber" name="phonenumber" class="form-control">
+                <label for="phonenumber" class="required-asterisk">Phone Number</label>
+                <input type="tel" id="phonenumber" name="phonenumber" class="form-control" required/>
                 <br>
             </div>
         </div>
         <div class="row">
             <!-- Email input field-->
             <div class="col-sm">
-                <label for="emailaddress">Email Address</label>
-                <input type="email" id="emailaddress" name="emailaddress" class="form-control">
+                <label for="emailaddress" class="required-asterisk">Email Address</label>
+                <input type="email" id="emailaddress" name="emailaddress" class="form-control" value="<?php echo $session_email ?>" required/>
                 <br>
             </div>
 
             <!-- Num Guests input field-->
             <div class="col-sm">
-                <label for="numguests">Number Of Guests</label>
-                <input type="number" min="0" id="numguests" name="numguests" class="form-control" value="1">
+                <label for="numguests" class="required-asterisk">Number Of Guests</label>
+                <input type="number" min="0" id="numguests" name="numguests" class="form-control" value="1" required>
                 <small class="form-text text-muted">Max number of guests including yourself: 20</small>
                 <br>
             </div>
         </div>
         <div class="row">
             <div class="col-sm">
-                <label>Reservation Date</label>
+                <label class="required-asterisk">Reservation Date</label>
                 <!-- Date input field -->
-                <input id="reservation-date" type="date" class="form-control input-sm" id="date" name="date"/>
+                <input id="reservation-date" type="date" class="form-control input-sm" id="date" name="date" required/>
                 <br>
             </div>
             <div class="col-sm"></div>

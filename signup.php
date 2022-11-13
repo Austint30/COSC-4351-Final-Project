@@ -53,7 +53,7 @@
 
             try {
                 $stmt->execute();
-                storeSession($username, $name);
+                storeSession($username, $name, $email);
                 header("Location: /?successmsg=Account was successfully created! You are now logged in.");
                 exit;
             }
