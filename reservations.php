@@ -49,6 +49,7 @@
             <div class="col-sm">
                 <label for="numguests">Number Of Guests</label>
                 <input type="number" min="0" id="numguests" name="numguests" class="form-control" value="0">
+                <small class="form-text text-muted">Max number of guests: 20</small>
                 <br>
             </div>
         </div>
@@ -94,6 +95,17 @@
     resDateInput.addEventListener('input', callApi);
     // $resTime.addEventListener('input', callApi);
     restInput.addEventListener('input', callApi);
+
+    // minmax guests input. Don't allow num of guests to exceed 20 or go below 0
+    numGuestsInput.addEventListener('input', () => {
+        if (numGuestsInput.value > 20){
+            numGuestsInput.value = 20;
+        }
+        else if (numGuestsInput.value < 0){
+            numGuestsInput.value = 0;
+        }
+    });
+
     numGuestsInput.addEventListener('input', callApi);
 
     times = null;
