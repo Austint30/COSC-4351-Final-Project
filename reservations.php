@@ -6,13 +6,31 @@
     $session_name = $_SESSION["name"] ?? "";
     $session_email = $_SESSION["email"] ?? "";
 
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $successMsg = "Reservation submitted";
+
+        header("Location: /post-reservation.php");
+        exit;
+    }
+
 ?>
 
 
 <div class="container page-body" style="max-width: 800px">
     <h5 class="border-bottom pb-3 lead text-center">RESERVE A TABLE</h5>
+
+    <?php
+
+        if (isset($successMsg)){
+            echo '<div class="alert alert-success">'.$successMsg.'</div>';
+        }
+
+    ?>
+    
+
     <!-- Form starts here -->
-    <form action="" method="post">
+    <form action="reservations.php" method="post">
         <!-- Restaurant selection field-->
         <div>
             <label for="restaurant-select" class="required-asterisk">Select Location</label>
@@ -84,9 +102,7 @@
         </div>
         
         <!-- Fee warning -->
-        <div>
-            <p class="text-danger">Please note that on high traffic days a $10 holding fee will be placed, and returned upon arrival. If you do not show up then it is not refunded</p>
-        </div>
+        <div id="fee-warning"></div>
 
         <!-- Showing how many of which table is available  NEEDS TO BE DONE-->
         <div>
@@ -107,6 +123,7 @@
     resDateInput = document.getElementById("reservation-date");
     restInput = document.getElementById("restaurant-select");
     numGuestsInput = document.getElementById("numguests");
+    feeWarningCont = document.getElementById("fee-warning");
     
     resDateInput.addEventListener('input', debouncedCallApi);
     restInput.addEventListener('input', debouncedCallApi);
@@ -138,7 +155,7 @@
 
     callApi();
 
-    function onResTimeChosen(time){
+    function onResTimeChosen(time, isHighTraffic){
         let dt = new Date(`${resDateInput.value}T${time}`);
         let timeStr = dt.toLocaleTimeString(undefined, {
                 hour: 'numeric',
@@ -149,10 +166,15 @@
             <div class="form-control" style="max-width: 100px;display: inline-block;">${timeStr}</div>
             <button id="clear-reservation" onclick="clearChosenTime();" type="button" class="btn btn-link">Clear</button>
         </span>`;
+
+        if (isHighTraffic){
+            feeWarningCont.innerHTML = `<p class="text-danger">Please note that on high traffic days a $10 holding fee will be placed, and returned upon arrival. If you do not show up then it is not refunded</p>`;
+        }
     }
 
     function clearChosenTime(){
         renderTimes();
+        feeWarningCont.innerHTML = '';
     }
 
     function findBestTableCombo(time){
@@ -190,18 +212,29 @@
             content += '<div class="lead text-center">No times available</div>';
         }
 
-        times.forEach(([ time, tables ]) => {
+        times.forEach(([ time, tables, perc_avail ]) => {
             let dt = new Date(`${resDateInput.value}T${time}`);
             let timeStr = dt.toLocaleTimeString(undefined, {
                 hour: 'numeric',
                 minute: 'numeric'
             })
 
+            let btnClass = "btn-outline-primary";
+            let tooltip = "";
+
+            let isHighTraffic = perc_avail < 0.5;
+
+            if (isHighTraffic){
+                btnClass = "btn-outline-danger";
+                tooltip = "High traffic time (less than 50% tables available)";
+            }
+
             content += `<button
                 id="res-time-${time}"
                 type="button"
-                class="btn btn-outline-primary"
-                onclick="onResTimeChosen('${time}')"
+                class="btn ${btnClass}"
+                onclick="onResTimeChosen('${time}', ${isHighTraffic})"
+                title="${tooltip}"
             >${timeStr}</li>`;
         })
 

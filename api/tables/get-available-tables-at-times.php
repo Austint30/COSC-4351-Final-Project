@@ -51,9 +51,15 @@
             array_push($result_array, $row);
         }
 
+        $total_tb_result = $conn->query("SELECT COUNT(id) FROM restaurant.r_table");
+
+        $total_tb = $total_tb_result->fetch_array()[0];
+
+        $perc_available = sizeof($result_array) / $total_tb;
+
         // Not enough table seats for this number of guests
         if ($num_guests === null || $total_seats >= $num_guests){
-            array_push($availableTimes, array($time->format("H:i"), $result_array));
+            array_push($availableTimes, array($time->format("H:i"), $result_array, $perc_available));
         }
 
         $time->add(new DateInterval("PT30M")); // Add 30 minutes
