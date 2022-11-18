@@ -112,6 +112,24 @@
         <div class="text-center">
             <button type="submit" class="btn btn-primary btn-lg">Reserve</button>  
         </div>
+
+        <!-- Credit Card input field -->
+        <div class="mb-3">
+            <label for="ccNumber" class="form-label">Credit Card Number</label>
+            <input class="form-control" id="ccNumber" placeholder="0000000000000000"/>
+        </div>
+
+        <!-- Check if CC number is valid button-->
+        <div class="mb-3">
+            <input type="button" class="btn btn-primary" value="Check" onClick="checkCC()"/>
+        </div>
+
+        <!-- Display if CC number is valid or not-->
+        <div class="mb-3">
+            <label for="ccValidator" class="form-label">Is it valid?</label>
+                <textarea disabled="true" class="form-control" id="ccValidator" rows="3" style="font-size: 25px"></textarea>
+        </div>
+
     </form>
 </div>
 
@@ -270,6 +288,12 @@
             renderTimes();
         })
     }
+
+    const CCNumber = document.getElementById();
+
+
+
+
     
 </script>
 
