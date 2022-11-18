@@ -126,7 +126,7 @@
 
         <!-- Display if CC number is valid or not-->
         <div class="mb-3">
-            <label for="ccValidator" class="form-label">Is it valid?</label>
+            <label for="ccDisplay" class="form-label">Is it valid?</label>
                 <textarea disabled="true" class="form-control" id="ccValidator" rows="3" style="font-size: 25px"></textarea>
         </div>
 
@@ -289,12 +289,74 @@
         })
     }
 
-    const CCNumber = document.getElementById();
+    //This is the luhnAlgorithm function which checks if a CC number is valid or not.
+    const luhnAlgorithm = (ccNumber) => {
+        const cclength = ccNumber.length;
+        let count = 0;
 
+        //Loop through ccNumber. Starts at the beginning of the number and begins doubling from the first number.
+        if(cclength % 2 == 0)
+        {
+            for(let i = 0; i < cclength; i++)
+            {
+                let currDigit = parseInt(ccNumber[i]);
+                if (i % 2 == 0) // I only want to double every other number, starts doubling with the second-to-last number. I don't want to double the last number.
+                {
+                    if ((currtDigit *= 2) > 9)
+                    {
+                        // Separate the number into component parts and then add them together.
+                        let trailingNumber = currDigit % 10;
+                        let firstNumber = parseInt(currDigit / 10);
 
+                        // If currentDigit was 18 then currentDigit is now 9.
+                        currDigit = firstNumber + trailingNumber;
+                    }
+                }
+                
+                count += currDigit;
+            }
+        }
+        else {
+            //this is same thing but for odd len cards such as american express
+            for(let i = cclength - 1 ; i >= 0; i--)
+            {
+                let currDigit = parseInt(ccNumber[i]);
+                if ((i - 1) % 2 == 0) // I only want to double every other number, starts doubling with the second-to-last number. I don't want to double the last number.
+                {
+                    if ((currDigit *= 2) > 9)
+                    {
+                        // Separate the number into component parts and then add them together.
+                        let trailingNumber = currDigit % 10;
+                        let firstNumber = parseInt(currDigit / 10);
 
+                        // If currentDigit was 18 then currentDigit is now 9.
+                        currDigit = firstNumber + trailingNumber;
+                    }
+                }
+                
+                count += currDigit;
+            }
+        }
 
-    
+        return (count % 10) === 0;
+    }
+
+    const checkCC = () => { //this function is called by button, eventually need it to be called automatically
+        const ccNumber = document.getElementById("ccNumber");
+        const ccValidation = document.getElementById("ccDisplay");
+        let message = "";
+
+        //Calling the Luhn Algo
+        if( luhnAlgorithm(ccNumber.value))
+            message = "Credit Card is VALID";
+        else
+            message = "Credit Card in INVALID";
+
+        //Make the ccDisplay = to the message variable which is blank initially
+        elCCValidation.textContent = message;
+        //Clears ccNumber field.
+        elCCNumber.value = null;
+    }
 </script>
 
 <?php include_once 'include/page-end.php' ?>
