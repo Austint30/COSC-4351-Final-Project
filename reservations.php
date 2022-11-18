@@ -119,11 +119,6 @@
             <input class="form-control" id="ccNumber" placeholder="0000000000000000"/>
         </div>
 
-        <!-- Check if CC number is valid button-->
-        <div class="mb-3">
-            <input type="button" class="btn btn-primary" value="Check" onclick="checkCC()"/>
-        </div>
-
         <!-- Display if CC number is valid or not-->
         <div class="mb-3">
             <label for="ccDisplay" class="form-label">Is it valid?</label>
@@ -142,10 +137,13 @@
     restInput = document.getElementById("restaurant-select");
     numGuestsInput = document.getElementById("numguests");
     feeWarningCont = document.getElementById("fee-warning");
+    ccNumber = document.getElementById("ccNumber");
+
     
     resDateInput.addEventListener('input', debouncedCallApi);
     restInput.addEventListener('input', debouncedCallApi);
     numGuestsInput.addEventListener('input', debouncedCallApi);
+    ccNumber.addEventListener('input', checkCC);
 
     // minmax guests input. Don't allow num of guests to exceed 20 or go below 0
     numGuestsInput.addEventListener('input', () => {
@@ -289,7 +287,7 @@
         })
     }
 
-    //This is the luhnAlgorithm function which checks if a CC number is valid or not.
+    //This is the luhnAlgorithm function which checks if a CC number is valid or not. This is a simplified better version of the Luhn Algo.
     const luhnAlgorithm = (ccNumber) => {
         const cclength = ccNumber.length;
         let count = 0;
@@ -339,9 +337,8 @@
         return (count % 10) === 0;
     }
 
-    const checkCC = () => { //this function is called by button, eventually need it to be called automatically
+    function checkCC ()  { //this function is called by button, eventually need it to be called automatically
         console.log("checkCC has been called")
-        const ccNumber = document.getElementById("ccNumber");
         const ccValidation = document.getElementById("ccDisplay");
         let message = "";
 
@@ -354,7 +351,7 @@
         //Make the ccDisplay = to the message variable which is blank initially
         ccValidation.textContent = message;
         //Clears ccNumber field.
-        ccNumber.value = null;
+        //ccNumber.value = null;
     }
 </script>
 
