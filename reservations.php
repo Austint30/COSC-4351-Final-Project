@@ -121,13 +121,13 @@
 
         <!-- Check if CC number is valid button-->
         <div class="mb-3">
-            <input type="button" class="btn btn-primary" value="Check" onClick="checkCC()"/>
+            <input type="button" class="btn btn-primary" value="Check" onclick="checkCC()"/>
         </div>
 
         <!-- Display if CC number is valid or not-->
         <div class="mb-3">
             <label for="ccDisplay" class="form-label">Is it valid?</label>
-                <textarea disabled="true" class="form-control" id="ccValidator" rows="3" style="font-size: 25px"></textarea>
+                <textarea disabled="true" class="form-control" id="ccDisplay" rows="3" style="font-size: 25px"></textarea>
         </div>
 
     </form>
@@ -302,7 +302,7 @@
                 let currDigit = parseInt(ccNumber[i]); //have to do this because ccNumber[i] is actually a char 
                 if (i % 2 == 0) //Only multiply every other num by 2, starts doubling with the second-to-last number. Do not do the last number
                 {
-                    if ((currtDigit *= 2) > 9)
+                    if ((currDigit *= 2) > 9)
                     {
                         // Separate the number into component parts and then add them together.
                         let trailingNumber = currDigit % 10;
@@ -340,6 +340,7 @@
     }
 
     const checkCC = () => { //this function is called by button, eventually need it to be called automatically
+        console.log("checkCC has been called")
         const ccNumber = document.getElementById("ccNumber");
         const ccValidation = document.getElementById("ccDisplay");
         let message = "";
@@ -351,9 +352,9 @@
             message = "Credit Card in INVALID";
 
         //Make the ccDisplay = to the message variable which is blank initially
-        elCCValidation.textContent = message;
+        ccValidation.textContent = message;
         //Clears ccNumber field.
-        elCCNumber.value = null;
+        ccNumber.value = null;
     }
 </script>
 
