@@ -138,7 +138,7 @@
     numGuestsInput = document.getElementById("numguests");
     feeWarningCont = document.getElementById("fee-warning");
     ccNumber = document.getElementById("ccNumber");
-
+    ccDisplay = document.getElementById("ccDisplay");
     
     resDateInput.addEventListener('input', debouncedCallApi);
     restInput.addEventListener('input', debouncedCallApi);
@@ -186,6 +186,26 @@
         if (isHighTraffic){
             feeWarningCont.innerHTML = `<p class="text-danger">Please note that on high traffic days a $10 holding fee will be placed, and returned upon arrival. If you do not show up then it is not refunded</p>`;
         }
+
+
+        //I don't know if this will work, just experimenting
+        if (isHighTraffic){
+            ccNumber.innerHTML = ` 
+                <div class="mb-3">
+                    <label for="ccNumber" class="form-label">Credit Card Number</label>
+                    <input class="form-control" id="ccNumber" placeholder="0000000000000000"/>
+                </div>`
+        }
+
+        //I don't know if this will work, just experimenting
+        if (isHighTraffic){
+            ccDisplay.innerHTML = ` 
+                <div class="mb-3">
+                    <label for="ccDisplay" class="form-label">Is it valid?</label>
+                    <textarea disabled="true" class="form-control" id="ccDisplay" rows="3" style="font-size: 25px"></textarea>
+                </div>`
+        }
+        
     }
 
     function clearChosenTime(){
