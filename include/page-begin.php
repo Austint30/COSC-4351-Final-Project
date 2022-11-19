@@ -35,6 +35,12 @@
     </title>
     <script src="js/debounce.js"></script>
     <script src="js/util.js"></script>
+    <script src="js/popup.js"></script>
+    <script>
+        // Javascript globals
+        const GLOBAL_COMPANY_NAME = '<?php echo $companyName ?>'
+
+    </script>
 </head>
 <body>
 <?php include_once 'navbar.php' ?>

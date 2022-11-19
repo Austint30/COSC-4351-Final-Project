@@ -30,7 +30,7 @@
     
 
     <!-- Form starts here -->
-    <form action="reservations.php" method="post">
+    <form method="post" onsubmit="return submitForm();">
         <!-- Restaurant selection field-->
         <div>
             <label for="restaurant-select" class="required-asterisk">Select Location</label>
@@ -110,7 +110,9 @@
 
         <!-- Reserve button -->
         <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-lg">Reserve</button>  
+            <!-- TODO: remove onclick="submitForm();" -->
+            <button type="submit" class="btn btn-primary btn-lg" onclick="submitForm();">Reserve</button>
+            <button type="button" class="ml-2" class="btn btn-primary btn-lg" onclick="submitForm();">Popup</button>
         </div>
 
         <!-- Credit Card input field -->
@@ -128,7 +130,18 @@
     </form>
 </div>
 
+
+<script src="js/signin-or-signup.js"></script>
 <script>
+    let signinPopup = new SignInSignUpModal();
+    console.log(signinPopup);
+    function submitForm(e){
+        signinPopup.show();
+    }
+</script>
+
+<script>
+
     const debouncedCallApi = debounce(callApi);
 
     resTimeBody = document.getElementById("reservation-times-body");
