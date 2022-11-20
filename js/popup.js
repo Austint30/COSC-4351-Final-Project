@@ -10,6 +10,11 @@ class PopUp {
             this.container = containerElement;
         }
 
+        this.render();
+        
+    }
+
+    render(){
 
         this.container.innerHTML = `
         <div class="modal-dialog">
@@ -23,11 +28,10 @@ class PopUp {
 
         // Wait for renderContent to complete then set the HTML of the container to the result
         this.renderContent()
-            .then((content) => {
-                this.container.innerHTML = content;
-                this.afterRenderContent();
-            });
-        
+        .then((content) => {
+            this.container.innerHTML = content;
+            this.afterRenderContent();
+        });
     }
 
     show(){ $(this.container).modal('show'); }
@@ -40,6 +44,8 @@ class PopUp {
         this.container.setAttribute('tabindex', '-1');
         this.container.setAttribute('role', 'dialog');
         this.container.setAttribute('aria-hidden', 'true');
+
+        document.body.appendChild(this.container);
     }
 
     async renderContent(){

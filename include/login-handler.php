@@ -1,5 +1,8 @@
 <?php
 include_once 'exceptions.php';
+include_once 'connect.php';
+include_once 'form.php';
+include_once 'auth.php';
 
 
 class LoginFlags {
@@ -10,14 +13,16 @@ class LoginFlags {
 }
 
 function login(LoginFlags &$flags){
+    global $conn;
+
     if ($_SERVER["REQUEST_METHOD"] != "POST"){
         throw InvalidMethodException("POST method is required");
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $userId = validateNotEmpty("username", $flags->$usernameMsg, "Username is required", $flags->$form_invalid);
-        $password = validateNotEmpty("password", $flags->$passwordMsg, "Password is required", $flags->$form_invalid);
+        $userId = validateNotEmpty("username", $flags->usernameMsg, "Username is required", $flags->form_invalid);
+        $password = validateNotEmpty("password", $flags->passwordMsg, "Password is required", $flags->form_invalid);
 
-        if (!$flags->$form_invalid){
+        if (!$flags->form_invalid){
             $stmt = $conn->prepare("SELECT username, email, password, type, name
                                 FROM restaurant.user 
                                 WHERE (username = ? OR email = ?);");
@@ -32,19 +37,14 @@ function login(LoginFlags &$flags){
                 if (password_verify($password, $user->password)){
                     // Login successful! Add username to session.
                     storeSession($user->username, $user->name, $user->email);
-                    if ($user->type === "ADMIN"){
-                        header("Location: /admin.php?successmsg=You are now logged in as an admin.");
-                    }
-                    else
-                    {
-                        header("Location: /?successmsg=You are now logged in.");
-                    }
-                    exit;
+                    
+                    // Return user object
+                    return $user;
                 }
             }
 
             // No users found with that password.
-            $flags->$login_failed = true;
+            $flags->login_failed = true;
         }
 
         

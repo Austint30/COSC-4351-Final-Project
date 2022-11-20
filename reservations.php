@@ -30,7 +30,7 @@
     
 
     <!-- Form starts here -->
-    <form method="post" onsubmit="return submitForm();">
+    <form id="reservation-form" method="post">
         <!-- Restaurant selection field-->
         <div>
             <label for="restaurant-select" class="required-asterisk">Select Location</label>
@@ -111,8 +111,7 @@
         <!-- Reserve button -->
         <div class="text-center">
             <!-- TODO: remove onclick="submitForm();" -->
-            <button type="submit" class="btn btn-primary btn-lg" onclick="submitForm();">Reserve</button>
-            <button type="button" class="ml-2" class="btn btn-primary btn-lg" onclick="submitForm();">Popup</button>
+            <button type="submit" class="btn btn-primary btn-lg">Reserve</button>
         </div>
 
         <!-- Credit Card input field -->
@@ -133,9 +132,24 @@
 
 <script src="js/signin-or-signup.js"></script>
 <script>
+    let userSignedIn = <?php echo strlen($session_name) > 0 ? "true" : "false"; ?>;
+
+    let resForm = document.getElementById("reservation-form");
+
+    if (!userSignedIn){
+        // If user is not signed in display the sign up prompt
+        resForm.addEventListener('submit', submitForm);
+    }
+
     let signinPopup = new SignInSignUpModal();
-    console.log(signinPopup);
+
+    function handleAfterSignInPopup(){
+        resForm.submit();
+    }
+
     function submitForm(e){
+        e.preventDefault();
+        signinPopup.setOnSuccessCallback(handleAfterSignInPopup);
         signinPopup.show();
     }
 </script>

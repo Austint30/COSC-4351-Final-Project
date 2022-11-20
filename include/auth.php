@@ -48,6 +48,12 @@ function hashPassword($sourcePswd){
     return password_hash($sourcePswd, PASSWORD_DEFAULT);
 }
 
+function startSession(){
+    session_start([
+        'cookie_lifetime' => 86400*30 // user will lose session after 1 month
+    ]);
+}
+
 function storeSession($username, $name, $email){
     $_SESSION["username"] = $username;
     $_SESSION["name"] = $name;

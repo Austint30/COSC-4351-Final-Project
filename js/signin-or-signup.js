@@ -2,10 +2,23 @@ var modalContainer;
 
 class SignInSignUpModal extends PopUp {
 
+    loginHTML = '';
+    signUpHTML = 'Work in progress!';
+    onSuccessCallback = null;
+
+    setOnSuccessCallback(callback){
+        this.onSuccessCallback = callback;
+    }
+
     async getLoginComponent(){
+
+        if (this.loginHTML){
+            return this.loginHTML;
+        }
+
         let result = await fetch('components/login.php');
-        let html = await result.text();
-        return html;
+        this.loginHTML = await result.text();
+        return this.loginHTML;
     }
 
     setUpRefs(){
@@ -18,6 +31,7 @@ class SignInSignUpModal extends PopUp {
     // override
     afterRenderContent(){
         this.setUpRefs();
+        this.attachEventListeners();
     }
 
     /**
@@ -25,7 +39,28 @@ class SignInSignUpModal extends PopUp {
      * @param {SubmitEvent} e 
      */
     handleLoginSubmit(e){
-        
+
+        let formData = new FormData(this.loginForm);
+
+        fetch('api/auth/login.php', {
+            method: 'POST',
+            cors: 'same-origin',
+            body: formData
+        })
+        .then(async (resp) => {
+            if ([403, 400].includes(resp.status)){
+                // Login form has errors. Rerender the form.
+                let html = resp.text();
+                this.loginHTML = html;
+                this.render();
+            }
+            else
+            {
+                if (this.onSuccessCallback){
+                    this.onSuccessCallback();
+                }
+            }
+        })
     }
 
     attachEventListeners(){
@@ -34,16 +69,25 @@ class SignInSignUpModal extends PopUp {
             e.preventDefault(); // Prevent form from submitting.
             this.handleLoginSubmit(e);
         })
+
+        let contWoAccountBtn = document.getElementById('cont-without-account-btn');
+        contWoAccountBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (this.onSuccessCallback){
+                this.onSuccessCallback();
+            }
+        })
     }
     
     // override
     async renderContent(){
         let loginHTML = await this.getLoginComponent();
+
         return`
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center lead sign-in-popup-header text-light" style="display: block;">
-                    <div class="flex-1">Create reservations quicker and easier by<br> creating a ${GLOBAL_COMPANY_NAME} account</div>
+                    <div class="flex-1">Make reservations quicker and easier by<br> creating a ${GLOBAL_COMPANY_NAME} account</div>
                 </div>
                 <div class="modal-body text-center">
                     
@@ -64,14 +108,14 @@ class SignInSignUpModal extends PopUp {
                                     ${loginHTML}
                                 </div>
                                 <div class="tab-pane fade card-body" id="signup-tab">
-                                    Sign up
+                                    ${this.signUpHTML}
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <div class="w-100 text-center">
-                        <a href="#">Continue without account</a>
+                        <a id="cont-without-account-btn" href="#">Continue without account</a>
                     </div>
                 </div>
             </div>

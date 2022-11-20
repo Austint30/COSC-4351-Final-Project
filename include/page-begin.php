@@ -1,12 +1,12 @@
 <?php
     include_once "global.php";
     include_once "messages.php";
+    include_once "auth.php";
+    include_once "form.php";
     // Always include_once this php file on the top of every page
 
     // Start user session (stores temporary stuff server side like username after login)
-    session_start([
-        'cookie_lifetime' => 86400*30 // user will lose session after 1 month
-    ]);
+    startSession();
 ?>
 
 <?php require 'connect.php' ?>
