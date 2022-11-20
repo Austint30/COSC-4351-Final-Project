@@ -87,7 +87,7 @@ class SignInSignUpModal extends PopUp {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center lead sign-in-popup-header text-light" style="display: block;">
-                    <div class="flex-1">Make reservations quicker and easier by<br> creating a ${GLOBAL_COMPANY_NAME} account</div>
+                    <div class="flex-1">Make reservations quicker and easier with<br> a ${GLOBAL_COMPANY_NAME} account</div>
                 </div>
                 <div class="modal-body text-center">
                     
