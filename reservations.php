@@ -1,13 +1,17 @@
 <?php $pageTitle="Reservations"; $pageID="reservations" ?>
 <?php include_once 'include/page-begin.php' ?>
 <?php include_once 'include/reservation/get-available-tables-at-times.php' ?>
+<?php include_once 'include/reservation/create-reservation.php' ?>
 <?php include_once 'include/form.php' ?>
 <?php include_once 'include/global.php' ?>
 
 <?php
 
     $session_name = $_SESSION["name"] ?? "";
+    $session_username = $_SESSION["username"] ?? "";
     $session_email = $_SESSION["email"] ?? "";
+
+    $submissionErrorMsg = null;
 
     $form_invalid = false;
     $restIdMsg = null;
@@ -118,8 +122,28 @@
         }
 
         if (!$form_invalid){
-            header("Location: /post-reservation.php");
-            exit;
+            $resOpt = new ReservationOptions();
+            $resOpt->name = $name;
+            $resOpt->email = $email;
+            $resOpt->rest_id = (int) $restId;
+            $resOpt->phone = $phone;
+            $resOpt->num_guests = $numGuests;
+            $resOpt->res_date = $resDate;
+            $resOpt->res_time = $resTime;
+            $resOpt->cc_number = $ccNumber ?? "";
+            $resOpt->user_id = $session_username;
+
+            try{
+                $new_res_id = createReservation($resOpt);
+            }
+            catch(ReservationException $e){
+                $submissionErrorMsg = $e.getMessage();
+            }
+
+            if (!$submissionErrorMsg){
+                header("Location: /post-reservation.php?res_id=".$new_res_id);
+                exit;
+            }
         }
     }
 
@@ -141,7 +165,11 @@
     <!-- Form starts here -->
     <form id="reservation-form" method="post">
         <?php
-        
+
+            if ($submissionErrorMsg){
+                echo '<div class="alert alert-danger mb-3">Failed to submit reservation: '.$submissionErrorMsg.'</div>';
+            }
+
             if ($form_invalid){
                 echo '<div class="alert alert-danger mb-3">We found some issues with your form. Please correct the items highlighted in red.</div>';
             }
