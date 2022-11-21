@@ -553,17 +553,20 @@
             if( luhnAlgorithm(ccNumberInput.value))
             {
                 ccNumberInput.classList.add("is-valid");
+                ccNumberInput.classList.remove("is-invalid");
                 feedback = `<div class="valid-feedback" style="display: block;">Credit Card Number is VALID</div>`;
             }
             else
             {
                 ccNumberInput.classList.add("is-invalid");
+                ccNumberInput.classList.remove("is-valid");
                 feedback = `<div class="invalid-feedback" style="display: block;">Credit Card Number is INVALID</div>`;
             }
         }
         else
         {
             ccNumberInput.classList.add("is-invalid");
+            ccNumberInput.classList.remove("is-valid");
             feedback = `<div class="invalid-feedback" style="display: block;">Credit Card Number is required</div>`;
         }
 
