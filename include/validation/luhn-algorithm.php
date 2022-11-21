@@ -1,5 +1,9 @@
 <?php
 
+/*
+Based on https://github.com/tobymac208/YouTubeTutorials/blob/main/javascript_credit_card_validation/index.js
+*/
+
 //This is the luhnAlgorithm function which checks if a CC number is valid or not. This is a simplified better version of the Luhn Algo.
 function luhnAlgorithm(string $ccNumber){
     $ccLen = strlen($ccNumber);
