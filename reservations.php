@@ -24,7 +24,7 @@
 
         // This data is not actually processed.
         // Using this to keep the reservation time consistent if the form is rejected
-        $isHighTraffic = $_POST["is-high-traffic"];
+        $isHighTraffic = $_POST["is-high-traffic"] ?? false;
 
         $restId = validateNotEmpty("rest-id", $restIdMsg, "Location is required", $form_invalid);
         $name = validateNotEmpty("name", $nameMsg, "Name is required", $form_invalid);
