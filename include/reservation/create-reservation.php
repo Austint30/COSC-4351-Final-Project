@@ -3,6 +3,8 @@
 include_once __DIR__."/get-available-tables-at-times-ungrouped.php";
 include_once __DIR__."/../exceptions.php";
 include_once __DIR__."/../connect.php";
+include_once __DIR__."/../global.php";
+include_once __DIR__."/../encryption.php";
 
 // Greedy algorithm that sorts the tables from smallest # of seats to largest.
 // Then it loops through the list of tables and compares each with it's neighbor multiple times
@@ -70,8 +72,9 @@ class ReservationOptions {
     public string $res_date;
     public string $res_time;
     public string $cc_number;
-    public string $cc_v;
-    public string $cc_exp;
+    public string $cc_cvv;
+    public string $cc_exp_month;
+    public string $cc_exp_year;
     public string $user_id;
 }
 
@@ -97,10 +100,15 @@ function createReservation(ReservationOptions &$options){
 
     $conn->query("START TRANSACTION;");
 
-    $stmt = $conn->prepare("INSERT INTO restaurant.reservation (name, phone_number, email, date, time, num_guests, user, rest_id) VALUES (?,?,?,?,?,?,?,?);");
+    $stmt = $conn->prepare("INSERT INTO restaurant.reservation (name, phone_number, email, date, time, num_guests, user, rest_id, cc_number, cc_cvv, cc_month, cc_year) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
+
+    $cc_number = $options->cc_number ? encrypt($ccEncrpytKey, $options->cc_number) : 'NULL';
+    $cc_cvv = $options->cc_cvv ?? 'NULL';
+    $cc_exp_month = $options->cc_exp_month ?? 'NULL';
+    $cc_exp_year = $options->cc_exp_year ?? 'NULL';
 
     $stmt->bind_param(
-        "sssssisi",
+        "sssssisisiis",
         $options->name,
         $options->phone,
         $options->email,
@@ -108,7 +116,11 @@ function createReservation(ReservationOptions &$options){
         $options->res_time,
         $options->num_guests,
         $options->userId,
-        $options->rest_id
+        $options->rest_id,
+        $cc_number,
+        $cc_cvv,
+        $cc_exp_month,
+        $cc_exp_year
     );
 
     $stmt->execute();

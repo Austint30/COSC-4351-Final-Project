@@ -22,6 +22,9 @@
     $resDateMsg = null;
     $resTimeMsg = null;
     $ccNumberMsg = null;
+    $cvvMsg = null;
+    $ccExpMonthMsg = null;
+    $ccExpYearMsg = null;
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -119,6 +122,24 @@
             if ($ccNumberMsg === null){
                 $ccNumber = validateCreditCard("ccNumber", $ccNumberMsg, "Credit Card Number is INVALID", $form_invalid);
             }
+
+            $cvv = validateNotEmpty("cvv", $cvvMsg, "CVV is required", $form_invalid);
+
+            if ($cvvMsg === null){
+                $cvv = validateCVV("cvv", $cvvMsg, "Please type a valid CVV", $form_invalid);
+            }
+
+            $ccExpMonth = validateNotEmpty("ccMonth", $ccExpMonthMsg, "Month is required", $form_invalid);
+
+            if ($ccExpMonthMsg === null){
+                $ccExpMonth = validateMonth("ccMonth", $ccExpMonthmsg, "Please type 1-12", $form_invalid);
+            }
+
+            $ccExpYear = validateNotEmpty("ccYear", $ccExpYearMsg, "Year is required", $form_invalid);
+
+            if ($ccExpMonthMsg === null){
+                $ccExpYear = validateYear("ccYear", $ccExpYearMsg, "Please type a valid year in the format YYYY", $form_invalid);
+            }
         }
 
         if (!$form_invalid){
@@ -131,6 +152,9 @@
             $resOpt->res_date = $resDate;
             $resOpt->res_time = $resTime;
             $resOpt->cc_number = $ccNumber ?? "";
+            $resOpt->cc_cvv = $cvv ?? "";
+            $resOpt->cc_exp_month = $ccExpMonth ?? "";
+            $resOpt->cc_exp_year = $ccExpYear ?? "";
             $resOpt->user_id = $session_username;
 
             try{
@@ -336,6 +360,7 @@
     // Prevent user from selecting a date before today
     resDateInput.addEventListener('input', () => {
         let today = new Date();
+        console.log(today.getTimezoneOffset());
         const inputDate = new Date(resDateInput.value+'T00:00');
 
         if (inputDate < today) {
@@ -372,19 +397,40 @@
 
         if (isHighTraffic){
             feeWarningCont.innerHTML = `<p class="text-danger">Please note that on high traffic days a $10 holding fee will be placed, and returned upon arrival. If you do not show up then it is not refunded</p>`;
-        }
-
-
-        //I don't know if this will work, just experimenting
-        if (isHighTraffic){
-            ccNumberCont.innerHTML = ` 
-                <div class="mb-3">
-                    <label for="ccNumber" class="form-label">Credit Card Number</label>
-                    <input class="form-control <?php echo $ccNumberMsg ? "is-invalid" : "" ?>" id="ccNumber" name="ccNumber" autocomplete="cc-number" value="<?php echo $ccNumber ?? '' ?>"/>
-                    <div id="ccnumber-feedback-container">
-                        <?php renderErrorFeedback($ccNumberMsg ?? null) ?>
+            ccNumberCont.innerHTML = `
+                <div class="mb-3 row">
+                    <div class="col-sm">
+                        <label for="ccNumber" class="form-label">Credit Card Number</label>
+                        <input class="form-control <?php echo $ccNumberMsg ? "is-invalid" : "" ?>" id="ccNumber" name="ccNumber" autocomplete="cc-number" value="<?php echo $ccNumber ?? '' ?>"/>
+                        <div id="ccnumber-feedback-container">
+                            <?php renderErrorFeedback($ccNumberMsg ?? null) ?>
+                        </div>
                     </div>
-                </div>`;
+                    <div class="mb-3 d-flex col-sm">
+                        <div class="mr-3">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input style="width: 70px;" max="3" class="form-control <?php echo $cvvMsg ? "is-invalid" : "" ?>" id="cvv" name="cvv" autocomplete="cc-csc" value="<?php echo $cvv ?? '' ?>"/>
+                            <div id="cvv-feedback-container">
+                                <?php renderErrorFeedback($cvvMsg ?? null) ?>
+                            </div>
+                        </div>
+                        <div class="mr-3">
+                            <label for="ccMonth" class="form-label">Exp Month</label>
+                            <input type="number" min="1" max="12" style="width: 100px;" placeholder="e.g. 11" class="form-control <?php echo $ccExpMonthMsg ? "is-invalid" : "" ?>" id="ccMonth" name="ccMonth" autocomplete="cc-exp-month" value="<?php echo $ccExpMonth ?? '' ?>"/>
+                            <div id="ccmonth-feedback-container">
+                                <?php renderErrorFeedback($ccExpMonthMsg ?? null) ?>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="ccYear" class="form-label">Exp Year</label>
+                            <input type="number" min="<?php (new DateTime)->format("Y") ?>" style="width: 120px;" placeholder="e.g. 2024" class="form-control <?php echo $ccExpYearMsg ? "is-invalid" : "" ?>" id="ccYear" name="ccYear" autocomplete="cc-exp-year" value="<?php echo $ccExpYear ?? '' ?>"/>
+                            <div id="ccmonth-feedback-container">
+                                <?php renderErrorFeedback($ccExpYearMsg ?? null) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
             
             // Add event listener to check card validity on input of field
             if (ccNumberInput){
@@ -392,6 +438,11 @@
             }
             ccNumberInput = document.getElementById("ccNumber");
             ccNumberInput.addEventListener('input', checkCC);
+        }
+        else
+        {
+            feeWarningCont.innerHTML = '';
+            ccNumberCont.innerHTML = '';
         }
 
         // //I don't know if this will work, just experimenting

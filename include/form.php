@@ -79,7 +79,7 @@
                 $hasError = true;
             }
         }
-        return $_POST[$fieldName];
+        return $value;
     }
 
     function validateCreditCard($fieldName, &$errMsgVar, $errMsg="Credit Card is invalid.", &$hasError=null){
@@ -95,6 +95,56 @@
         return $_POST[$fieldName];
     }
 
+    function validateCVV($fieldName, &$errMsgVar, $errMsg="Please type a valid CVV.", &$hasError=null){
+        $value = $_POST[$fieldName];
+        $invalid = false;
+
+        $value = intval($value); // Convert to int
+        if ($value < 100 || $value > 999){
+            $invalid = true;
+        }
+        if ($invalid){
+            $errMsgVar = $errMsg;
+            if ($hasError !== null){
+                $hasError = true;
+            }
+        }
+        return $value;
+    }
+
+    function validateMonth($fieldName, &$errMsgVar, $errMsg="Please type 1-12.", &$hasError=null){
+        $value = $_POST[$fieldName];
+        $invalid = false;
+
+        $value = intval($value); // Convert to int
+        if ($value < 1 || $value > 12){
+            $invalid = true;
+        }
+        if ($invalid){
+            $errMsgVar = $errMsg;
+            if ($hasError !== null){
+                $hasError = true;
+            }
+        }
+        return $value;
+    }
+
+    function validateYear($fieldName, &$errMsgVar, $errMsg="Please type a valid year in the format YYYY.", &$hasError=null){
+        $value = $_POST[$fieldName];
+        $invalid = false;
+
+        $value = intval($value); // Convert to int
+        if ($value <= 0){
+            $invalid = true;
+        }
+        if ($invalid){
+            $errMsgVar = $errMsg;
+            if ($hasError !== null){
+                $hasError = true;
+            }
+        }
+        return $value;
+    }
 
     function renderErrorFeedback($message){
         if ($message){
