@@ -10,9 +10,16 @@
             $stmt->bind_param("i", $res_id);
             $stmt->execute();
             $result = $stmt->get_result();
-            echo "<div>";
-            echo json_encode($result->fetch_assoc());
-            echo "</div>";
+            $res = $result->fetch_assoc();
+
+            $date = DateTime::createFromFormat("Y-m-d", $res["date"]);
+            $time = DateTime::createFromFormat("H:i:s", $res["time"]);
+
+            $date = $date->format("l, F j");
+            $time = $time->format("g:i A");
+
+            echo '<h4 class="load">Your reservation for '.$date.' at '.$time.' has been successfully placed.</h4>';
+            echo '<p>See you there!</p>';
         }
         else
         {
