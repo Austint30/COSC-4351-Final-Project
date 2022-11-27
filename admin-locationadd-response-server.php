@@ -1,5 +1,6 @@
 <?php $pageTitle="Admin"; $pageID="admin"; ?>
 <?php include_once 'include/page-begin.php' ?>
+    <?php renderMsgs(); ?>
 
 <?php
     
@@ -19,5 +20,7 @@
         
         $stmt->bind_param("sss", $address, $city, $state);
         $stmt->execute();
+
+        header("Location: admin.php?successmsg=Location Added Successfully");
     }
 ?>

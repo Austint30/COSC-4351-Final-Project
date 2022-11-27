@@ -13,7 +13,7 @@
     <?php renderMsgs(); ?>
 
     <h3>Add a location:</h3>
-    <form action="admin-addlocation.php" method="POST">
+    <form action="admin-locationadd-response-server.php" method="POST">
         <div class="form-group">
             <label>Street Address</label>
             <input type="text" class="form-control" name="address" placeholder="Enter street address">
