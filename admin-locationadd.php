@@ -9,7 +9,7 @@
 ?>
 
 <div class="container page-body">
-    <h1 class="mt-3">Admin Control Page</h1>
+    <h1 class="mt-3">Admin Add Location Page</h1>
     <?php renderMsgs(); ?>
 
     <h3>Add a location:</h3>

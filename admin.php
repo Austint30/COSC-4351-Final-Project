@@ -14,7 +14,7 @@
     <div>
         <a href="/admin-locationadd.php" class="btn btn-primary">Add Location</a>
         <a href="/admin.php" class="btn btn-primary">Edit Location</a>
-        <a href="/admin.php" class="btn btn-primary">Delete Location</a>
+        <a href="/admin-locationdelete.php" class="btn btn-primary">Delete Location</a>
     </div>
 
     <br><br>
