@@ -12,6 +12,11 @@
             $result = $stmt->get_result();
             $res = $result->fetch_assoc();
 
+            if (!$res){
+                header("Location: /");
+                exit;
+            }
+
             $date = DateTime::createFromFormat("Y-m-d", $res["date"]);
             $time = DateTime::createFromFormat("H:i:s", $res["time"]);
 
