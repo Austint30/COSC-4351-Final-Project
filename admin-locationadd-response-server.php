@@ -21,6 +21,6 @@
         $stmt->bind_param("sss", $address, $city, $state);
         $stmt->execute();
 
-        header("Location: admin.php?successmsg=Successful");
+        header("Location: admin.php?successmsg=Successfully Added");
     }
 ?>

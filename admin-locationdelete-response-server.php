@@ -16,6 +16,6 @@
         $stmt->bind_param("s", $x);
         $stmt->execute();
 
-        header("Location: admin.php?successmsg=Location Added Successfully");
+        header("Location: admin.php?successmsg=Successfully Deleted");
     }
 ?>
