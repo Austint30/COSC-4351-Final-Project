@@ -44,7 +44,7 @@ body {
     
 }
 
-.reservation-times-container > .reservation-times-body > .reservation-times-grid {
+.reservation-times-container > .reservation-times-body .reservation-times-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-auto-rows: 40px;

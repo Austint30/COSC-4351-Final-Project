@@ -491,13 +491,20 @@
 
     function renderTimes(){
         if (!times) return;
-        let content = '<div class="reservation-times-grid">';
+        let content = '<div>';
 
         if (times.length == 0){
             content += '<div class="lead text-center">No times available</div>';
         }
 
-        times.forEach(([ time, tables, perc_avail ]) => {
+        if (times[0][4]){
+            // If this is a special day, display a message
+            content += `<div class="alert alert-warning my-3">We are expecting higher traffic than usual on ${times[0][4]}. $10 holding fee will apply.</div>`;
+        }
+
+        content += '<div class="reservation-times-grid">';
+
+        times.forEach(([ time, tables, perc_avail, is_high_traffic, special_day_desc ]) => {
             
             let dt = new Date(`${resDateInput.value}T${time}`);
             let timeStr = dt.toLocaleTimeString(undefined, {
@@ -508,23 +515,21 @@
             let btnClass = "btn-outline-primary";
             let tooltip = "";
 
-            let isHighTraffic = perc_avail < <?php echo $highTrafficThreshold ?>;
-
-            if (isHighTraffic){
+            if (is_high_traffic && !special_day_desc){
                 btnClass = "btn-outline-danger";
-                tooltip = "High traffic time (less than 50% tables available)";
+                tooltip = "High traffic expected at this time";
             }
 
             content += `<button
                 id="res-time-${time}"
                 type="button"
                 class="btn ${btnClass}"
-                onclick="onResTimeChosen('${time}', ${isHighTraffic})"
+                onclick="onResTimeChosen('${time}', ${is_high_traffic})"
                 title="${tooltip}"
             >${timeStr}</li>`;
         })
 
-        content += '</div';
+        content += '</div></div>';
         resTimeBody.innerHTML = content;
     }
 

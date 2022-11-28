@@ -17,6 +17,17 @@ function getAvailTablesAtTimesUngrouped(string $date, string $rest_id, int $num_
         return array();
     }
 
+    $month = intval($parsedDate->format("m"));
+    $day = intval($parsedDate->format("d"));
+
+    // Is this day a special day (higher traffic than normal)
+    $res = $conn->query("SELECT description FROM restaurant.special_days WHERE month=$month AND day=$day");
+    $special_day_desc = null;
+    $row = $res->fetch_assoc();
+    if ($row){
+        $special_day_desc = $row["description"];
+    }
+
     $time = new DateTime();
 
     $today = new DateTime();
@@ -76,7 +87,8 @@ function getAvailTablesAtTimesUngrouped(string $date, string $rest_id, int $num_
                     $time->format("H:i"),
                     $result_array,
                     $perc_available,
-                    $perc_available < $highTrafficThreshold // Is high traffic
+                    $special_day_desc ? true : ($perc_available < $highTrafficThreshold), // Is high traffic
+                    $special_day_desc
                 ));
         }
 
