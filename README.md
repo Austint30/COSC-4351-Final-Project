@@ -5,7 +5,7 @@
 2. Go to your XAMPP install directory (installs in C:/xampp by default) and delete everything within the `htdocs` directory.
 3. Then move this project into `htdocs`.
 4. [Install Composer](https://getcomposer.org/) and choose the php.exe located within the XAMPP directory.
-5. Navigate to the root directory of the project and run `composer install`.
+5. In the terminal, navigate to the root directory of the project and run `composer install`.
 
 ## 2) Set up MySQL database
 1. [Install MySQL for Windows](https://dev.mysql.com/downloads/installer/) and install the second option.
