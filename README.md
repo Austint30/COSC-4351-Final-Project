@@ -21,4 +21,4 @@
 
 ## 3) Run unit tests
 1. Navigate to the root directory of the project in the terminal.
-2. Run `./vendor/bin/phpunit ./tests` (PHPUnit dependency must be installed using Composer).
+2. Run `./test.bat` (PHPUnit dependency must be installed using Composer).
