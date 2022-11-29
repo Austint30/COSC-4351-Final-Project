@@ -44,6 +44,10 @@ function luhnAlgorithm(string $ccNumber){
         }
     }
 
+    if ($count === 0){
+        return false;
+    }
+
     return ($count % 10) === 0;
 }
 
