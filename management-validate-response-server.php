@@ -36,7 +36,7 @@
         }
 
 
-        header("Location: management.php?successmsg=Successfully Validated");
+        header("Location: management.php?successmsg=Successfully Approved");
     }
 
 

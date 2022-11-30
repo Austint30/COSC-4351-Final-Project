@@ -57,7 +57,7 @@
                 echo '<td>'.$row['num_guests'].'</td>';
                 echo '<td>'.str_replace(', ', '<br>', $row['tables']).'</td>';
                 echo '<td style=\'white-space: nowrap;\'>';
-                    echo ' <a class="btn btn-success mr-1 text-white" href = "management-validate-response-server.php?id='.$row['resv_id'].'"> Validate </button> ';
+                    echo ' <a class="btn btn-success mr-1 text-white" href = "management-validate-response-server.php?id='.$row['resv_id'].'"> Approve </button> ';
                     echo ' <a class="btn btn-danger mr-1 text-white" href = "management-cancel-response-server.php?id='.$row['resv_id'].'"> Cancel </button> ';
                 echo '</td>';
                 echo '</tr>';
