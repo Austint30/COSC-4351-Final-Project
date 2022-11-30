@@ -102,11 +102,11 @@ function createReservation(ReservationOptions &$options){
 
     $stmt = $conn->prepare("INSERT INTO restaurant.reservation (name, phone_number, email, date, time, num_guests, user, rest_id, cc_number, cc_cvv, cc_month, cc_year) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
 
-    $cc_number = $options->cc_number ? encrypt($ccEncrpytKey, $options->cc_number) : 'NULL';
-    $cc_cvv = $options->cc_cvv ?? 'NULL';
-    $cc_exp_month = $options->cc_exp_month ?? 'NULL';
-    $cc_exp_year = $options->cc_exp_year ?? 'NULL';
-    $username = $options->user_id ?? 'NULL';
+    $cc_number = $options->cc_number ? encrypt($ccEncrpytKey, $options->cc_number) : null;
+    $cc_cvv = $options->cc_cvv ?? null;
+    $cc_exp_month = $options->cc_exp_month ?? null;
+    $cc_exp_year = $options->cc_exp_year ?? null;
+    $username = $options->user_id ?? null;
 
     $stmt->bind_param(
         "sssssisisiis",
