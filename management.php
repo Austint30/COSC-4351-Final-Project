@@ -43,7 +43,7 @@
                 AND is_cancelled=0
                 AND is_approved=0
                 GROUP BY resv_id
-                ORDER BY date, time');
+                ORDER BY date, time ASC');
             
             // This query will return duplicate reservations with each table 
 
@@ -52,8 +52,8 @@
                 echo '<td>'.$row['name'].'</td>';
                 echo '<td>'.$row['phone_number'].'</td>';
                 echo '<td>'.$row['email'].'</td>';
-                echo '<td>'.$row['date'].'</td>';
-                echo '<td>'.$row['time'].'</td>';
+                echo '<td style=\'white-space: nowrap;\'>'.$row['date'].'</td>';
+                echo '<td style=\'white-space: nowrap;\'>'.$row['time'].'</td>';
                 echo '<td>'.$row['num_guests'].'</td>';
                 echo '<td>'.str_replace(', ', '<br>', $row['tables']).'</td>';
                 echo '<td style=\'white-space: nowrap;\'>';
