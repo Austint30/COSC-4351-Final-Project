@@ -73,7 +73,13 @@ function getAvailTablesAtTimesUngrouped(string $date, string $rest_id, int $num_
             array_push($result_array, $row);
         }
 
-        $total_tb_result = $conn->query("SELECT COUNT(id) FROM restaurant.r_table");
+        $stmt = $conn->prepare("SELECT COUNT(id) FROM restaurant.r_table WHERE rest_id=?");
+
+        $stmt->execute([$rest_id]);
+
+        $total_tb_result = $stmt->get_result();
+
+        $total_tb = $total_tb_result->fetch_array()[0];
 
         $total_tb = $total_tb_result->fetch_array()[0];
 
