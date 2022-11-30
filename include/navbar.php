@@ -35,6 +35,15 @@ function activeNavItem($_pageID, $className="active"){
                         </li>';
                     }
                 ?>
+                <?php
+                    if (checkUserType(getCurrentUser($conn), "STAFF") || checkUserType(getCurrentUser($conn), "ADMIN")){
+                        echo '<li class="nav-item ';
+                        echo activeNavItem("management");
+                        echo '">
+                            <a class="nav-link" href="/management.php">Management</a>
+                        </li>';
+                    }
+                ?>
             </ul>
             <?php
             

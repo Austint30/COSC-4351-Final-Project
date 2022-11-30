@@ -44,6 +44,15 @@ function requireUserAdmin($conn){
     die;
 }
 
+function requireUserStaffOrAdmin($conn){
+    $user = getCurrentUser($conn);
+    if ($user && (checkUserType($user, "STAFF") || checkUserType($user, "ADMIN"))){
+        return;
+    }
+    header("Location: /");
+    die;
+}
+
 function hashPassword($sourcePswd){
     return password_hash($sourcePswd, PASSWORD_DEFAULT);
 }
