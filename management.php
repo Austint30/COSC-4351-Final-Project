@@ -31,14 +31,21 @@
             <th>Date</th>
             <th>Time</th>
             <th>Number of Guests</th>
+            <th>Tables needed</th>
             <th>Approve or Cancel</th>
         </tr></thead>
     <tbody>
         <?php
-            $query = $conn->query('SELECT * from restaurant.reservation 
-                                   WHERE rest_id='.$restaurantId.'
-                                   AND is_cancelled=0 
-                                   AND is_approved=0');
+            $query = $conn->query('SELECT reservation.id AS resv_id, name, phone_number, email, date, time, num_guests, user, reservation.rest_id, GROUP_CONCAT(CONCAT(num_seats, \' Seat Table\') SEPARATOR \', \') as tables from restaurant.reservation 
+                LEFT JOIN restaurant.reserved_table ON resv_id=reservation.id
+                LEFT JOIN restaurant.r_table ON r_table.id=reserved_table.table_id
+                WHERE reservation.rest_id='.$restaurantId.'
+                AND is_cancelled=0
+                AND is_approved=0
+                GROUP BY resv_id
+                ORDER BY date, time');
+            
+            // This query will return duplicate reservations with each table 
 
             while ($row = $query->fetch_assoc()){
                 echo '<tr>';
@@ -48,9 +55,10 @@
                 echo '<td>'.$row['date'].'</td>';
                 echo '<td>'.$row['time'].'</td>';
                 echo '<td>'.$row['num_guests'].'</td>';
-                echo '<td>';
-                    echo ' <a class="btn btn-success mr-1 text-white" href = "management-validate-response-server.php?id='.$row['id'].'"> Validate </button> ';
-                    echo ' <a class="btn btn-danger mr-1 text-white" href = "management-cancel-response-server.php?id='.$row['id'].'"> Cancel </button> ';
+                echo '<td>'.str_replace(', ', '<br>', $row['tables']).'</td>';
+                echo '<td style=\'white-space: nowrap;\'>';
+                    echo ' <a class="btn btn-success mr-1 text-white" href = "management-validate-response-server.php?id='.$row['resv_id'].'"> Validate </button> ';
+                    echo ' <a class="btn btn-danger mr-1 text-white" href = "management-cancel-response-server.php?id='.$row['resv_id'].'"> Cancel </button> ';
                 echo '</td>';
                 echo '</tr>';
             }
