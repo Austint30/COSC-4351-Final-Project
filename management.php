@@ -8,7 +8,7 @@
 
 ?>
 
-<div class="container text-center page-body">
+<div class="container text-center page-body" style="width: 1221px;">
     <h1>Management Page</h1>
     <?php renderMsgs(); ?>
 
