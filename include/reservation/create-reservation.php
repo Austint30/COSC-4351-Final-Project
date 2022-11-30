@@ -109,7 +109,7 @@ function createReservation(ReservationOptions &$options){
     $username = $options->user_id ?? 'NULL';
 
     $stmt->bind_param(
-        "sssssisisiiss",
+        "sssssisisiis",
         $options->name,
         $options->phone,
         $options->email,
