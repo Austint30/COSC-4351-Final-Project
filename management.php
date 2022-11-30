@@ -13,7 +13,14 @@
     <?php renderMsgs(); ?>
 
     <!-- Page content goes here! -->
+    <?php
+    
+        if (isset($_SESSION["restId"])){
+            $restaurantId = $_SESSION["restId"];
+            echo "Your restaurant ID is ".$restaurantId;
+        }
 
+    ?>
 </div>
 
 <?php include_once 'include/page-end.php' ?>

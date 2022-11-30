@@ -63,10 +63,13 @@ function startSession(){
     ]);
 }
 
-function storeSession($username, $name, $email){
+function storeSession($username, $name, $email, $restId){
     $_SESSION["username"] = $username;
     $_SESSION["name"] = $name;
     $_SESSION["email"] = $email;
+    if ($restId){
+        $_SESSION["restId"] = $restId;
+    }
 }
 
 ?>

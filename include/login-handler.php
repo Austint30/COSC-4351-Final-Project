@@ -23,7 +23,7 @@ function login(LoginFlags &$flags){
         $password = validateNotEmpty("password", $flags->passwordMsg, "Password is required", $flags->form_invalid);
 
         if (!$flags->form_invalid){
-            $stmt = $conn->prepare("SELECT username, email, password, type, name
+            $stmt = $conn->prepare("SELECT username, email, password, type, name, employed_at_rest
                                 FROM restaurant.user 
                                 WHERE (username = ? OR email = ?);");
         
@@ -36,7 +36,7 @@ function login(LoginFlags &$flags){
             while ($user = $result->fetch_object()){
                 if (password_verify($password, $user->password)){
                     // Login successful! Add username to session.
-                    storeSession($user->username, $user->name, $user->email);
+                    storeSession($user->username, $user->name, $user->email, $user->employed_at_rest);
                     
                     // Return user object
                     return $user;
