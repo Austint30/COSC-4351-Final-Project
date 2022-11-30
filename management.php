@@ -50,7 +50,7 @@
                 echo '<td>'.$row['num_guests'].'</td>';
                 echo '<td>';
                     echo ' <a class="btn btn-success mr-1 text-white" href = "management-validate-response-server.php?id='.$row['id'].'"> Validate </button> ';
-                    echo ' <a class="btn btn-danger text-white"> Cancel </button> ';
+                    echo ' <a class="btn btn-danger mr-1 text-white" href = "management-cancel-response-server.php?id='.$row['id'].'"> Cancel </button> ';
                 echo '</td>';
                 echo '</tr>';
             }
