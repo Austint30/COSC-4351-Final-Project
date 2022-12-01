@@ -20,9 +20,9 @@
     <br><br>
 
     <div>
-        <a href="/admin-add.php" class="btn btn-primary">Add Staff</a>
-        <a href="/admin.php" class="btn btn-primary">Edit Staff</a>
-        <a href="/admin.php" class="btn btn-primary">Delete Staff</a>  
+        <a href="/admin-staffadd.php" class="btn btn-primary">Add Staff</a>
+        <a href="/admin-staffedit.php" class="btn btn-primary">Edit Staff</a>
+        <a href="/admin-staffdelete.php" class="btn btn-primary">Delete Staff</a>  
     </div>
 
 </div>
