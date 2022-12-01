@@ -72,7 +72,7 @@ function signup(SignUpFlags &$flags, SignUpFormData &$formData){
 
             $password = hashPassword($formData->password);
         
-            $stmt->bind_param("sssssss", $formData->email, $formData->password, $formData->email, $formData->name, $formData->mailing, $formData->billing, $formData->payment);
+            $stmt->bind_param("sssssss", $formData->email, $password, $formData->email, $formData->name, $formData->mailing, $formData->billing, $formData->payment);
             try {
                 $stmt->execute();
                 storeSession($formData->email, $formData->name, $formData->email, null);
