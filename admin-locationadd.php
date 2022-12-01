@@ -16,18 +16,18 @@
     <form action="admin-locationadd-response-server.php" method="POST">
         <div class="form-group">
             <label>Street Address</label>
-            <input type="text" class="form-control" name="address" placeholder="Enter street address">
+            <input type="text" class="form-control" name="address" placeholder="Enter street address" required>
             <small class="form-text text-muted">Address should not contain city, state, or country</small>
         </div>
 
         <div class="form-group">
             <label>City</label>
-            <input type="text" class="form-control" name="city" placeholder="Enter city name">
+            <input type="text" class="form-control" name="city" placeholder="Enter city name" required> 
         </div>
 
         <div>
             <label>State</label>
-            <select class="form-control" name="state">
+            <select class="form-control" name="state" required>
                 <option value="" selected="selected">Select a State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
