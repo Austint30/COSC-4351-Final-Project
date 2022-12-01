@@ -20,7 +20,7 @@
     <!-- Password input field-->
     <div>
         <h3>Password:</h3>
-        <input type="login-password" id="password" name="password" placeholder="Enter Password" class="form-control <?php echo (isset($flags) && $flags->passwordMsg) ? "is-invalid" : "" ?>" value="<?php echo $password ?? "" ?>">
+        <input type="password" id="login-password" name="password" placeholder="Enter Password" class="form-control <?php echo (isset($flags) && $flags->passwordMsg) ? "is-invalid" : "" ?>" value="<?php echo $password ?? "" ?>">
         <?php renderErrorFeedback($flags->passwordMsg ?? null) ?>
         <br><br>
     </div>
