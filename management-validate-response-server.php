@@ -38,7 +38,7 @@
         }
 
 
-        header("Location: management.php?successmsg=Successfully Approved");
+        header("Location: management.php?successmsg=Successfully Completed Reservation");
     }
 
 

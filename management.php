@@ -32,7 +32,7 @@
             <th>Time</th>
             <th>Number of Guests</th>
             <th>Tables needed</th>
-            <th>Approve or Cancel</th>
+            <th class="text-left">Complete or Cancel</th>
         </tr></thead>
     <tbody>
         <?php
@@ -72,7 +72,7 @@
                                 echo '<input style="width: 80px;" class="form-control" name="dollars" type="number" min="1" value="1" max="100" />';
                                 echo '<div class="input-group-append">';
                         }
-                                    echo '<button title="Removes reservation from list and gives the user a point for every dollar." class="btn btn-success mr-1 text-white">Approve</button> ';
+                                    echo '<button title="Removes reservation from list and gives the user a point for every dollar." class="btn btn-success mr-1 text-white">Complete</button> ';
                         if ($username){
                                 echo '</div>';
                             echo '</div>';
