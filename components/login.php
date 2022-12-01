@@ -12,7 +12,7 @@
     <!-- Email input field-->
     <div>
         <h3>Email:</h3>
-        <input id="email" name="username" placeholder="Enter Email Address" class="form-control <?php echo (isset($flags) && $flags->usernameMsg) ? "is-invalid" : "" ?>" value="<?php echo $userId ?? "" ?>">
+        <input id="login-email" name="username" placeholder="Enter Email Address" class="form-control <?php echo (isset($flags) && $flags->usernameMsg) ? "is-invalid" : "" ?>" value="<?php echo $userId ?? "" ?>">
         <?php renderErrorFeedback($flags->usernameMsg ?? null) ?>
         <br><br>
     </div>
@@ -20,7 +20,7 @@
     <!-- Password input field-->
     <div>
         <h3>Password:</h3>
-        <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control <?php echo (isset($flags) && $flags->passwordMsg) ? "is-invalid" : "" ?>" value="<?php echo $password ?? "" ?>">
+        <input type="login-password" id="password" name="password" placeholder="Enter Password" class="form-control <?php echo (isset($flags) && $flags->passwordMsg) ? "is-invalid" : "" ?>" value="<?php echo $password ?? "" ?>">
         <?php renderErrorFeedback($flags->passwordMsg ?? null) ?>
         <br><br>
     </div>

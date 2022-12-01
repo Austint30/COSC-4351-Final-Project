@@ -3,7 +3,7 @@ var modalContainer;
 class SignInSignUpModal extends PopUp {
 
     loginHTML = '';
-    signUpHTML = 'Work in progress!';
+    signUpHTML = '';
     onSuccessCallback = null;
 
     setOnSuccessCallback(callback){
@@ -21,17 +21,32 @@ class SignInSignUpModal extends PopUp {
         return this.loginHTML;
     }
 
+    async getSignUpComponent(){
+
+        if (this.signUpHTML){
+            return this.signUpHTML;
+        }
+
+        let result = await fetch('components/signup.php');
+        this.signUpHTML = await result.text();
+        return this.signUpHTML;
+    }
+
     setUpRefs(){
         // Set up references to form elements of login and signup to prevent them from changing the page
         // when being submitted
 
         this.loginForm = document.getElementById('login-form');
+        this.signUpForm = document.getElementById('signup-form');
     }
 
     // override
     afterRenderContent(){
         this.setUpRefs();
         this.attachEventListeners();
+        if (refreshSignUpUiEventListeners){
+            refreshSignUpUiEventListeners();
+        }
     }
 
     /**
@@ -63,11 +78,45 @@ class SignInSignUpModal extends PopUp {
         })
     }
 
+    /**
+     * Handle submission of signup prompt
+     * @param {SubmitEvent} e 
+     */
+     handleSignUpSubmit(e){
+
+        let formData = new FormData(this.signUpForm);
+
+        fetch('api/auth/signup.php', {
+            method: 'POST',
+            cors: 'same-origin',
+            body: formData
+        })
+        .then(async (resp) => {
+            if ([403, 400].includes(resp.status)){
+                // Login form has errors. Rerender the form.
+                let html = resp.text();
+                this.signUpForm = html;
+                this.render();
+            }
+            else
+            {
+                if (this.onSuccessCallback){
+                    this.onSuccessCallback();
+                }
+            }
+        })
+    }
+
     attachEventListeners(){
         // Attach event listers to forms
         this.loginForm.addEventListener('submit', (e) => {
             e.preventDefault(); // Prevent form from submitting.
             this.handleLoginSubmit(e);
+        })
+
+        this.signUpForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent form from submitting.
+            this.handleSignUpSubmit(e);
         })
 
         let contWoAccountBtn = document.getElementById('cont-without-account-btn');
@@ -82,6 +131,7 @@ class SignInSignUpModal extends PopUp {
     // override
     async renderContent(){
         let loginHTML = await this.getLoginComponent();
+        let signUpHTML = await this.getSignUpComponent();
 
         return`
         <div class="modal-dialog modal-lg">
@@ -108,7 +158,7 @@ class SignInSignUpModal extends PopUp {
                                     ${loginHTML}
                                 </div>
                                 <div class="tab-pane fade card-body" id="signup-tab">
-                                    ${this.signUpHTML}
+                                    ${signUpHTML}
                                 </div>
                             </div>
                         </div>
