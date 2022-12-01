@@ -4,7 +4,7 @@
 <form id="signup-form" action="signup.php" method="post">
     <?php
         if (isset($flags) && $flags->signup_failed_msg){
-            echo '<div class="alert alert-danger mb-2" role="alert">'.$flags->$signup_failed_msg.'</div>';
+            echo '<div class="alert alert-danger mb-2" role="alert">'.$flags->signup_failed_msg.'</div>';
         }
 
         $emailMsg = null;
@@ -23,6 +23,26 @@
             $mailingMsg = $flags->mailingMsg;
             $billingMsg = $flags->billingMsg;
             $paymentMsg = $flags->paymentMsg;
+        }
+
+        $email = "";
+        $password = "";
+        $rPassword = "";
+        $name = "";
+        $mailing = "";
+        $sameAsMail = "";
+        $billing = "";
+        $payment = "";
+
+        if (isset($formData)){
+            $email = $formData->email;
+            $password = $formData->password;
+            $rPassword = $formData->rPassword;
+            $name = $formData->name;
+            $mailing = $formData->mailing;
+            $sameAsMail = $formData->sameAsMail;
+            $billing = $formData->billing;
+            $payment = $formData->payment;
         }
 
     ?>

@@ -6,9 +6,10 @@
 <?php
 
     $flags = new SignUpFlags();
+    $formData = new SignUpFormData();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $user = signup($flags);
+        $user = signup($flags, $formData);
 
         if ($user){
             header("Location: /?successmsg=Account was successfully created! You are now logged in.");
