@@ -81,8 +81,6 @@ function getAvailTablesAtTimesUngrouped(string $date, string $rest_id, int $num_
 
         $total_tb = $total_tb_result->fetch_array()[0];
 
-        $total_tb = $total_tb_result->fetch_array()[0];
-
         $perc_available = sizeof($result_array) / $total_tb;
 
         // Not enough table seats for this number of guests

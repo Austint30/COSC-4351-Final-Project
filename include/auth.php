@@ -1,6 +1,8 @@
 <?php
+include_once __DIR__.'/connect.php';
 
-function getUser($conn, $username){
+function getUser($username){
+    global $conn;
     $stmt = $conn->prepare("SELECT * FROM restaurant.user WHERE user.username = ?;");
 
     $stmt->bind_param("s", $username);
@@ -27,16 +29,17 @@ function checkUserType($user, $userType){
 }
 
 // Gets the current user from the session
-function getCurrentUser($conn){
+function getCurrentUser(){
+
     if (isset($_SESSION["username"])){
-        $user = getUser($conn, $_SESSION["username"]);
+        $user = getUser($_SESSION["username"]);
         return $user;
     }
     return null;
 }
 
-function requireUserAdmin($conn){
-    $user = getCurrentUser($conn);
+function requireUserAdmin(){
+    $user = getCurrentUser();
     if ($user && checkUserType($user, "ADMIN")){
         return;
     }
@@ -44,8 +47,8 @@ function requireUserAdmin($conn){
     die;
 }
 
-function requireUserStaffOrAdmin($conn){
-    $user = getCurrentUser($conn);
+function requireUserStaffOrAdmin(){
+    $user = getCurrentUser();
     if ($user && (checkUserType($user, "STAFF") || checkUserType($user, "ADMIN"))){
         return;
     }

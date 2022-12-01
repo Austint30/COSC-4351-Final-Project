@@ -4,7 +4,7 @@
 
 <?php
     include_once 'include/auth.php';
-    requireUserAdmin($conn);
+    requireUserAdmin();
     //$resDateMsg = null;
 ?>
 

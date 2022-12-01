@@ -48,12 +48,14 @@
         {
             $stmt = $conn->prepare("INSERT INTO restaurant.user (username, password, email, name, mail_addr, billing_addr, pref_pay_method)
             VALUES (?,?,?,?,?,?,?)");
+
+            $password = hashPassword($password);
         
-            $stmt->bind_param("sssssss", $email, hashPassword($password), $email, $name, $mailing, $billing, $payment);
+            $stmt->bind_param("sssssss", $email, $password, $email, $name, $mailing, $billing, $payment);
 
             try {
                 $stmt->execute();
-                storeSession($username, $name, $email);
+                storeSession($email, $name, $email, nullP);
                 header("Location: /?successmsg=Account was successfully created! You are now logged in.");
                 exit;
             }

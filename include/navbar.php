@@ -27,7 +27,7 @@ function activeNavItem($_pageID, $className="active"){
                     <a class="nav-link" href="/reservations.php">Reservations</a>
                 </li>
                 <?php
-                    if (checkUserType(getCurrentUser($conn), "ADMIN")){
+                    if (checkUserType(getCurrentUser(), "ADMIN")){
                         echo '<li class="nav-item ';
                         echo activeNavItem("admin");
                         echo '">
@@ -36,7 +36,7 @@ function activeNavItem($_pageID, $className="active"){
                     }
                 ?>
                 <?php
-                    if (checkUserType(getCurrentUser($conn), "STAFF") || checkUserType(getCurrentUser($conn), "ADMIN")){
+                    if (checkUserType(getCurrentUser(), "STAFF") || checkUserType(getCurrentUser(), "ADMIN")){
                         echo '<li class="nav-item ';
                         echo activeNavItem("management");
                         echo '">
@@ -46,6 +46,13 @@ function activeNavItem($_pageID, $className="active"){
                 ?>
             </ul>
             <?php
+
+                $user = getCurrentUser();
+
+                if ($user && $user->type === "CUSTOMER"){
+                    $points = $user->points;
+                    echo '<div class="mr-3 text-white">'.$points.' Points</div>';
+                }
             
                 if(isset($_SESSION["username"]) && $_SESSION["username"]){
                     echo '<div class="dropdown">';
@@ -59,7 +66,8 @@ function activeNavItem($_pageID, $className="active"){
                 }
                 else
                 {
-                    echo '<a href="/login.php" class="btn btn-primary">Log In</a>';
+                    echo '<a href="/login.php" class="btn btn-primary mr-2">Log In</a>';
+                    echo '<a href="/signup.php" class="btn btn-primary">Sign Up</a>';
                 }
             ?>
         </div>

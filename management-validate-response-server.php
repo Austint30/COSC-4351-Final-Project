@@ -4,8 +4,10 @@
 
 <?php
 
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        $id = ($_GET['id']);
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = ($_POST['id']);
+        $dollars = intval($_POST["dollars"] ?? 1);
+
         echo $id;
 
         //here we are approving the reservation
@@ -27,7 +29,7 @@
 
         //check if the username is not empty, if it is not empty then we increase the points and update
         if (!empty($username)){
-            $points++;
+            $points += $dollars;
             $stmt3 = $conn->prepare("UPDATE restaurant.user 
                                     SET points = ?
                                     WHERE username=?");
