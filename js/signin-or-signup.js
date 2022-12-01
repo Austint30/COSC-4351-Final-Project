@@ -5,6 +5,7 @@ class SignInSignUpModal extends PopUp {
     loginHTML = '';
     signUpHTML = '';
     onSuccessCallback = null;
+    lastTab = 'login-tab';
 
     setOnSuccessCallback(callback){
         this.onSuccessCallback = callback;
@@ -65,7 +66,7 @@ class SignInSignUpModal extends PopUp {
         .then(async (resp) => {
             if ([403, 400].includes(resp.status)){
                 // Login form has errors. Rerender the form.
-                let html = resp.text();
+                let html = await resp.text();
                 this.loginHTML = html;
                 this.render();
             }
@@ -94,8 +95,8 @@ class SignInSignUpModal extends PopUp {
         .then(async (resp) => {
             if ([403, 400].includes(resp.status)){
                 // Login form has errors. Rerender the form.
-                let html = resp.text();
-                this.signUpForm = html;
+                let html = await resp.text();
+                this.signUpHTML = html;
                 this.render();
             }
             else
@@ -126,6 +127,19 @@ class SignInSignUpModal extends PopUp {
                 this.onSuccessCallback();
             }
         })
+
+        let loginTab = document.getElementById('login-tab-link');
+        let signupTab = document.getElementById('signup-tab-link');
+
+        loginTab.addEventListener('click', (e) => {
+            this.lastTab = 'login-tab';
+            this.render();
+        })
+
+        signupTab.addEventListener('click', (e) => {
+            this.lastTab = 'signup-tab';
+            this.render();
+        })
     }
     
     // override
@@ -144,20 +158,20 @@ class SignInSignUpModal extends PopUp {
                         <div class="d-flex justify-content-center mb-3" id="sign-in-tab">
                             <ul class="nav nav-pills d-flex align-items-center">
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-light active" data-toggle="tab" href="#login-tab">Sign In</a>
+                                    <a id="login-tab-link" class="nav-link btn btn-light ${this.lastTab === 'login-tab' ? 'active' : ''} data-toggle="tab" href="#login-tab">Sign In</a>
                                 </li>
                                 <span class="mx-3">or</span>
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-light" data-toggle="tab" href="#signup-tab">Sign Up</a>
+                                    <a id="signup-tab-link" class="nav-link btn btn-light" ${this.lastTab === 'signup-tab' ? 'active' : ''} data-toggle="tab" href="#signup-tab">Sign Up</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="card container mb-3" style="max-width: 600px;">
                             <div class="tab-content" id="signin-content">
-                                <div class="tab-pane fade show active card-body" id="login-tab">
+                                <div class="tab-pane fade ${this.lastTab === 'login-tab' ? 'show active' : ''} card-body" id="login-tab">
                                     ${loginHTML}
                                 </div>
-                                <div class="tab-pane fade card-body" id="signup-tab">
+                                <div class="tab-pane fade ${this.lastTab === 'signup-tab' ? 'show active' : ''} card-body" id="signup-tab">
                                     ${signUpHTML}
                                 </div>
                             </div>

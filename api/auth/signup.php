@@ -3,10 +3,11 @@
     include_once '../../include/auth.php';
 
     $flags = new SignUpFlags();
+    $formData = new SignUpFormData();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         startSession();
-        signup($flags);
+        signup($flags, $formData);
 
         if (!$flags->signup_failed_msg && !$flags->form_invalid){
             header("Content-Type: application/json; charset=utf-8");
@@ -18,7 +19,7 @@
         }
     }
 
-    if ($flags->login_failed){
+    if ($flags->signup_failed_msg){
         http_response_code(403);
     }
 

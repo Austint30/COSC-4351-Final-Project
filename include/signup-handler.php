@@ -53,7 +53,7 @@ function signup(SignUpFlags &$flags, SignUpFormData &$formData){
         $formData->rPassword = validateCustom("retype-password", $passwordValidator, $flags->rPasswordMsg, $flags->form_invalid);
         $formData->name = validateNotEmpty("name", $flags->nameMsg, "Name is required", $form_invalid);
         $formData->mailing = validateNotEmpty("mailing-address", $flags->mailingMsg, "Mailing address is required", $flags->form_invalid);
-        $formData->sameAsMail = $_POST["mail-same-billing"] ?? null;
+        $formData->sameAsMail = $_POST["mail-same-billing"] ?? "";
         
         $formData->payment = validateNotEmpty("pref-payment", $flags->paymentMsg, "Preferred payment required", $flags->form_invalid);
 
