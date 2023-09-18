@@ -1,4 +1,4 @@
-# Library Reservation System Project
+# Restaurant Table Reservation System
 # 1) How to set up our project
 ### Note: We developed this using Windows so we highly recommend installing the Windows versions of the software below
 ## 1) Set up project
